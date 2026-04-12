@@ -505,7 +505,7 @@
 
 <script>
   // ✏️ ใส่ GitHub username ของคุณที่นี่
-  const GITHUB_USERNAME = 'senmai121';
+  const GITHUB_USERNAME = 'YOUR_GITHUB_USERNAME';
 
   // GitHub language colors (subset)
   const LANG_COLORS = {
@@ -586,22 +586,27 @@
     container.innerHTML = buildSkeletonHTML();
 
     try {
+      // ดึงเฉพาะ repos ที่ติด topic "portfolio"
       const res = await fetch(
-        `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=30&type=public`
+        `https://api.github.com/search/repositories?q=user:${GITHUB_USERNAME}+topic:portfolio&sort=updated&per_page=30`,
+        { headers: { 'Accept': 'application/vnd.github.mercy-preview+json' } }
       );
 
       if (!res.ok) throw new Error(`GitHub API ${res.status}`);
 
-      const repos = await res.json();
+      const data = await res.json();
+      const repos = data.items || [];
 
-      // Filter: skip forks, sort by stars then updated
+      // Sort by stars then updated
       const filtered = repos
-        .filter(r => !r.fork)
         .sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.updated_at) - new Date(a.updated_at))
         .slice(0, 9);
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div class="projects-error">No public repositories found for <strong>${GITHUB_USERNAME}</strong>.</div>`;
+        container.innerHTML = `<div class="projects-error">
+          ไม่พบ repo ที่ติด topic <code>portfolio</code><br><br>
+          ไปที่ GitHub repo → กด ⚙️ ข้างๆ "About" → เพิ่ม <strong>portfolio</strong> ใน Topics แล้ว refresh หน้านี้ครับ
+        </div>`;
         return;
       }
 
