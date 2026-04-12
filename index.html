@@ -238,6 +238,51 @@
       padding: .15rem .5rem; border-radius: 4px; margin-left: .5rem;
     }
 
+    /* GITHUB REPO CARDS */
+    .repo-meta { display: flex; align-items: center; gap: 1rem; margin-top: auto; padding-top: 1rem; }
+    .repo-stat { display: flex; align-items: center; gap: .3rem; font-size: .8rem; color: var(--muted); }
+    .lang-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* SKELETON LOADING */
+    .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.5rem; }
+    .skeleton-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      display: flex; flex-direction: column; gap: .75rem;
+    }
+    .skel {
+      background: linear-gradient(90deg, var(--border) 25%, var(--surface) 50%, var(--border) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 4px;
+    }
+    .skel-title { height: 18px; width: 60%; }
+    .skel-desc1 { height: 12px; width: 100%; }
+    .skel-desc2 { height: 12px; width: 80%; }
+    .skel-tag { height: 22px; width: 50px; border-radius: 4px; }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+
+    /* PROJECTS FILTER */
+    .projects-filter {
+      display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 2rem; align-items: center;
+    }
+    .filter-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .78rem; padding: .35rem .9rem; border-radius: 20px;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--muted); cursor: pointer; transition: all .2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--accent); color: var(--accent);
+      background: rgba(88,166,255,0.08);
+    }
+    .projects-error {
+      color: var(--muted); text-align: center; padding: 3rem;
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 12px; font-size: .9rem;
+    }
+    .projects-error a { color: var(--accent); }
+
     /* CONTACT */
     .contact-wrapper {
       background: var(--card-bg);
@@ -420,71 +465,14 @@
   <p class="section-label">03 · Projects</p>
   <h2 class="section-title">What I've Built</h2>
   <div class="section-divider"></div>
-  <div class="projects-grid">
 
-    <!-- ✏️ PROJECT 1 — แก้ข้อมูลให้ตรงกับ project จริง -->
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-icon">📦</div>
-        <div class="project-links">
-          <a class="project-link" href="#" title="GitHub">⌥</a>
-          <a class="project-link" href="#" title="Live Demo">↗</a>
-        </div>
-      </div>
-      <div class="project-title">Project Name <span class="project-wip">✏️ Edit</span></div>
-      <div class="project-desc">
-        Brief description of what this project does, what problem it solves,
-        and the key technical highlights. Keep it 2–3 sentences.
-      </div>
-      <div class="project-stack">
-        <span class="project-tech">Go</span>
-        <span class="project-tech">PostgreSQL</span>
-        <span class="project-tech">Docker</span>
-      </div>
-    </div>
+  <div class="projects-filter" id="lang-filters">
+    <span style="font-size:.8rem;color:var(--muted);margin-right:.25rem;">Filter:</span>
+    <button class="filter-btn active" data-lang="all">All</button>
+  </div>
 
-    <!-- ✏️ PROJECT 2 -->
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-icon">🌐</div>
-        <div class="project-links">
-          <a class="project-link" href="#" title="GitHub">⌥</a>
-          <a class="project-link" href="#" title="Live Demo">↗</a>
-        </div>
-      </div>
-      <div class="project-title">Project Name <span class="project-wip">✏️ Edit</span></div>
-      <div class="project-desc">
-        Brief description of what this project does, what problem it solves,
-        and the key technical highlights.
-      </div>
-      <div class="project-stack">
-        <span class="project-tech">Next.js</span>
-        <span class="project-tech">TypeScript</span>
-        <span class="project-tech">Tailwind</span>
-      </div>
-    </div>
-
-    <!-- ✏️ PROJECT 3 -->
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-icon">⚡</div>
-        <div class="project-links">
-          <a class="project-link" href="#" title="GitHub">⌥</a>
-          <a class="project-link" href="#" title="Live Demo">↗</a>
-        </div>
-      </div>
-      <div class="project-title">Project Name <span class="project-wip">✏️ Edit</span></div>
-      <div class="project-desc">
-        Brief description of what this project does, what problem it solves,
-        and the key technical highlights.
-      </div>
-      <div class="project-stack">
-        <span class="project-tech">C# .NET Core</span>
-        <span class="project-tech">Redis</span>
-        <span class="project-tech">MySQL</span>
-      </div>
-    </div>
-
+  <div id="projects-container">
+    <!-- JS will render skeleton + repo cards here -->
   </div>
 </section>
 
@@ -514,6 +502,153 @@
 <footer>
   <p>Designed & built by <span>Kanachai Niyomsilpchai</span> · 2025</p>
 </footer>
+
+<script>
+  // ✏️ ใส่ GitHub username ของคุณที่นี่
+  const GITHUB_USERNAME = 'senmai121';
+
+  // GitHub language colors (subset)
+  const LANG_COLORS = {
+    'Go':         '#00ADD8',
+    'C#':         '#239120',
+    'JavaScript': '#f1e05a',
+    'TypeScript': '#3178c6',
+    'Python':     '#3572A5',
+    'HTML':       '#e34c26',
+    'CSS':        '#563d7c',
+    'Shell':      '#89e051',
+    'Dockerfile': '#384d54',
+    'Vue':        '#41b883',
+    'Rust':       '#dea584',
+    'Java':       '#b07219',
+    'Kotlin':     '#A97BFF',
+    'Swift':      '#F05138',
+    'Ruby':       '#701516',
+    'PHP':        '#4F5D95',
+    'default':    '#8b949e'
+  };
+
+  function langColor(lang) {
+    return LANG_COLORS[lang] || LANG_COLORS['default'];
+  }
+
+  function repoIcon(lang) {
+    const icons = { Go:'🔵', 'C#':'🟣', JavaScript:'🟡', TypeScript:'🔷', Python:'🐍',
+                    HTML:'🌐', CSS:'🎨', Shell:'🖥️', default:'📦' };
+    return icons[lang] || icons.default;
+  }
+
+  function buildSkeletonHTML() {
+    return `<div class="skeleton-grid">${Array(6).fill(0).map(() => `
+      <div class="skeleton-card">
+        <div class="skel skel-title"></div>
+        <div class="skel skel-desc1"></div>
+        <div class="skel skel-desc2"></div>
+        <div style="display:flex;gap:.5rem;margin-top:.5rem">
+          <div class="skel skel-tag"></div>
+          <div class="skel skel-tag"></div>
+        </div>
+      </div>`).join('')}</div>`;
+  }
+
+  function buildRepoCard(repo) {
+    const lang = repo.language || '';
+    const desc = repo.description || '<em style="color:var(--muted);font-size:.85rem">No description</em>';
+    const color = langColor(lang);
+    const icon = repoIcon(lang);
+    const homepage = repo.homepage;
+
+    return `
+      <div class="project-card" data-lang="${lang}">
+        <div class="project-header">
+          <div class="project-icon">${icon}</div>
+          <div class="project-links">
+            <a class="project-link" href="${repo.html_url}" target="_blank" rel="noopener" title="GitHub">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+              </svg>
+            </a>
+            ${homepage ? `<a class="project-link" href="${homepage}" target="_blank" rel="noopener" title="Live">↗</a>` : ''}
+          </div>
+        </div>
+        <div class="project-title">${repo.name.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase())}</div>
+        <div class="project-desc">${desc}</div>
+        <div class="repo-meta">
+          ${lang ? `<span class="repo-stat"><span class="lang-dot" style="background:${color}"></span>${lang}</span>` : ''}
+          ${repo.stargazers_count > 0 ? `<span class="repo-stat">⭐ ${repo.stargazers_count}</span>` : ''}
+          ${repo.forks_count > 0 ? `<span class="repo-stat">🍴 ${repo.forks_count}</span>` : ''}
+        </div>
+      </div>`;
+  }
+
+  async function loadRepos() {
+    const container = document.getElementById('projects-container');
+    container.innerHTML = buildSkeletonHTML();
+
+    try {
+      const res = await fetch(
+        `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=30&type=public`
+      );
+
+      if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+
+      const repos = await res.json();
+
+      // Filter: skip forks, sort by stars then updated
+      const filtered = repos
+        .filter(r => !r.fork)
+        .sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.updated_at) - new Date(a.updated_at))
+        .slice(0, 9);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="projects-error">No public repositories found for <strong>${GITHUB_USERNAME}</strong>.</div>`;
+        return;
+      }
+
+      // Build language filter buttons
+      const langs = [...new Set(filtered.map(r => r.language).filter(Boolean))];
+      const filterBar = document.getElementById('lang-filters');
+      langs.forEach(lang => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.lang = lang;
+        btn.innerHTML = `<span class="lang-dot" style="background:${langColor(lang)};display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle"></span>${lang}`;
+        filterBar.appendChild(btn);
+      });
+
+      // Render cards
+      const grid = document.createElement('div');
+      grid.className = 'projects-grid';
+      grid.id = 'repos-grid';
+      grid.innerHTML = filtered.map(buildRepoCard).join('');
+      container.innerHTML = '';
+      container.appendChild(grid);
+
+      // Filter logic
+      filterBar.addEventListener('click', e => {
+        const btn = e.target.closest('.filter-btn');
+        if (!btn) return;
+        filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const lang = btn.dataset.lang;
+        grid.querySelectorAll('.project-card').forEach(card => {
+          card.style.display = (lang === 'all' || card.dataset.lang === lang) ? '' : 'none';
+        });
+      });
+
+    } catch (err) {
+      container.innerHTML = `
+        <div class="projects-error">
+          ⚠️ Could not load repositories.<br><br>
+          Make sure <code>GITHUB_USERNAME</code> is set correctly,<br>
+          or <a href="https://github.com/${GITHUB_USERNAME}?tab=repositories" target="_blank">view them on GitHub</a>.
+          <br><small style="opacity:.5">${err.message}</small>
+        </div>`;
+    }
+  }
+
+  loadRepos();
+</script>
 
 </body>
 </html>
