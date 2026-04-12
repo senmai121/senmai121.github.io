@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kanachai Niyomsilpchai | Full-Stack Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0d1117;
+      --surface:   #161b22;
+      --border:    #30363d;
+      --accent:    #58a6ff;
+      --accent2:   #3fb950;
+      --text:      #e6edf3;
+      --muted:     #8b949e;
+      --card-bg:   #1c2128;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem; color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.9rem;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 80px 2rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(88,166,255,0.08), transparent);
+      pointer-events: none;
+    }
+    .hero-inner { max-width: 760px; width: 100%; }
+    .hero-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem; color: var(--accent2);
+      margin-bottom: 1rem; letter-spacing: .05em;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700; line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--muted);
+      max-width: 540px; margin-bottom: 2.5rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .65rem 1.4rem; border-radius: 6px;
+      font-size: .9rem; font-weight: 500;
+      text-decoration: none; transition: all .2s; cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--accent); color: #0d1117;
+    }
+    .btn-primary:hover { background: #79b8ff; }
+    .btn-outline {
+      border: 1px solid var(--border); color: var(--text);
+      background: transparent;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* SECTIONS */
+    section { padding: 6rem 2rem; max-width: 960px; margin: 0 auto; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; color: var(--accent); letter-spacing: .1em;
+      text-transform: uppercase; margin-bottom: .5rem;
+    }
+    .section-title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700; margin-bottom: 1rem;
+    }
+    .section-divider {
+      width: 40px; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px; margin-bottom: 3rem;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+      align-items: start;
+    }
+    .about-text p { color: var(--muted); margin-bottom: 1rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-highlights { display: flex; flex-direction: column; gap: 1rem; }
+    .highlight-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.2rem;
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .highlight-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .highlight-label { font-size: .8rem; color: var(--muted); margin-bottom: .2rem; }
+    .highlight-value { font-weight: 600; font-size: .95rem; }
+
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1.5rem; }
+    .skill-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .skill-card-title {
+      font-size: .75rem; font-weight: 600;
+      color: var(--accent); letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .skill-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .78rem;
+      background: rgba(88,166,255,0.1);
+      color: var(--accent);
+      border: 1px solid rgba(88,166,255,0.2);
+      padding: .3rem .7rem; border-radius: 4px;
+    }
+    .skill-tag.green {
+      background: rgba(63,185,80,0.1);
+      color: var(--accent2);
+      border-color: rgba(63,185,80,0.2);
+    }
+    .skill-tag.gray {
+      background: rgba(139,148,158,0.1);
+      color: var(--muted);
+      border-color: rgba(139,148,158,0.2);
+    }
+
+    /* PROJECTS */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.5rem; }
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      display: flex; flex-direction: column;
+      transition: border-color .2s, transform .2s;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .project-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
+    .project-icon { font-size: 1.8rem; }
+    .project-links { display: flex; gap: .5rem; }
+    .project-link {
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 6px;
+      border: 1px solid var(--border);
+      color: var(--muted); text-decoration: none; font-size: 1rem;
+      transition: all .2s;
+    }
+    .project-link:hover { border-color: var(--accent); color: var(--accent); }
+    .project-title { font-size: 1.05rem; font-weight: 600; margin-bottom: .5rem; }
+    .project-desc { color: var(--muted); font-size: .9rem; flex: 1; margin-bottom: 1.2rem; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .project-tech {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem;
+      background: rgba(63,185,80,0.08);
+      color: var(--accent2);
+      border: 1px solid rgba(63,185,80,0.15);
+      padding: .2rem .6rem; border-radius: 4px;
+    }
+    .project-wip {
+      display: inline-block;
+      font-size: .7rem; background: rgba(255,166,0,0.1);
+      color: #ffa500; border: 1px solid rgba(255,166,0,0.2);
+      padding: .15rem .5rem; border-radius: 4px; margin-left: .5rem;
+    }
+
+    /* CONTACT */
+    .contact-wrapper {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 3rem;
+      text-align: center;
+    }
+    .contact-wrapper p { color: var(--muted); margin-bottom: 2rem; }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .contact-chip {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .6rem 1.2rem; border-radius: 6px;
+      border: 1px solid var(--border);
+      color: var(--text); text-decoration: none; font-size: .9rem;
+      transition: all .2s;
+    }
+    .contact-chip:hover { border-color: var(--accent); color: var(--accent); background: rgba(88,166,255,0.05); }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted); font-size: .85rem;
+    }
+    footer span { color: var(--accent); }
+
+    /* RESPONSIVE */
+    @media (max-width: 680px) {
+      .about-grid { grid-template-columns: 1fr; }
+      nav { padding: 0 1rem; }
+      .nav-links { gap: 1rem; }
+      section { padding: 4rem 1.25rem; }
+      .contact-wrapper { padding: 2rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">kanachai.dev</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-inner">
+    <p class="hero-tag">// Hello, World!</p>
+    <h1>I'm <span>Kanachai</span><br>Full-Stack Developer</h1>
+    <p class="hero-sub">
+      Building robust backends and modern web applications with Go, C# .NET Core, and Next.js.
+      I care about clean architecture, performance, and developer experience.
+    </p>
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="#projects">View Projects</a>
+      <a class="btn btn-outline" href="#contact">Contact Me</a>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">01 · About</p>
+  <h2 class="section-title">Who I Am</h2>
+  <div class="section-divider"></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        Hi! I'm <strong>Kanachai Niyomsilpchai</strong>, a Full-Stack Developer who loves building
+        things that work well under the hood. My focus is on backend systems and APIs — making them
+        fast, maintainable, and scalable.
+      </p>
+      <p>
+        On the frontend side, I work with Next.js to deliver clean, performant user interfaces.
+        I enjoy working across the stack and taking features from concept to production.
+      </p>
+      <p>
+        <!-- ✏️ Add your personal story, background, or goals here -->
+        Always curious, always learning — and open to new challenges.
+      </p>
+    </div>
+    <div class="about-highlights">
+      <div class="highlight-item">
+        <div class="highlight-icon">🧑‍💻</div>
+        <div>
+          <div class="highlight-label">Role</div>
+          <div class="highlight-value">Full-Stack / Backend Developer</div>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">📍</div>
+        <div>
+          <div class="highlight-label">Location</div>
+          <div class="highlight-value">Thailand 🇹🇭</div>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">📬</div>
+        <div>
+          <div class="highlight-label">Email</div>
+          <div class="highlight-value">kanachai.niyom@gmail.com</div>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">🚀</div>
+        <div>
+          <div class="highlight-label">Open to</div>
+          <div class="highlight-value">Full-time · Freelance · Collaboration</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">02 · Skills</p>
+  <h2 class="section-title">Tech Stack</h2>
+  <div class="section-divider"></div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-card-title">⚙️ Backend</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Go</span>
+        <span class="skill-tag">C# .NET Core</span>
+        <span class="skill-tag">REST API</span>
+        <span class="skill-tag">gRPC</span>
+        <span class="skill-tag">Gin</span>
+        <span class="skill-tag">ASP.NET</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">🖥️ Frontend</div>
+      <div class="skill-tags">
+        <span class="skill-tag green">Next.js</span>
+        <span class="skill-tag green">React</span>
+        <span class="skill-tag green">TypeScript</span>
+        <span class="skill-tag green">Tailwind CSS</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">🗄️ Database</div>
+      <div class="skill-tags">
+        <span class="skill-tag gray">PostgreSQL</span>
+        <span class="skill-tag gray">MySQL</span>
+        <span class="skill-tag gray">Redis</span>
+        <span class="skill-tag gray">MongoDB</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">🛠️ DevOps & Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag gray">Docker</span>
+        <span class="skill-tag gray">Git</span>
+        <span class="skill-tag gray">GitHub Actions</span>
+        <span class="skill-tag gray">Linux</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">03 · Projects</p>
+  <h2 class="section-title">What I've Built</h2>
+  <div class="section-divider"></div>
+  <div class="projects-grid">
+
+    <!-- ✏️ PROJECT 1 — แก้ข้อมูลให้ตรงกับ project จริง -->
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">📦</div>
+        <div class="project-links">
+          <a class="project-link" href="#" title="GitHub">⌥</a>
+          <a class="project-link" href="#" title="Live Demo">↗</a>
+        </div>
+      </div>
+      <div class="project-title">Project Name <span class="project-wip">✏️ Edit</span></div>
+      <div class="project-desc">
+        Brief description of what this project does, what problem it solves,
+        and the key technical highlights. Keep it 2–3 sentences.
+      </div>
+      <div class="project-stack">
+        <span class="project-tech">Go</span>
+        <span class="project-tech">PostgreSQL</span>
+        <span class="project-tech">Docker</span>
+      </div>
+    </div>
+
+    <!-- ✏️ PROJECT 2 -->
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">🌐</div>
+        <div class="project-links">
+          <a class="project-link" href="#" title="GitHub">⌥</a>
+          <a class="project-link" href="#" title="Live Demo">↗</a>
+        </div>
+      </div>
+      <div class="project-title">Project Name <span class="project-wip">✏️ Edit</span></div>
+      <div class="project-desc">
+        Brief description of what this project does, what problem it solves,
+        and the key technical highlights.
+      </div>
+      <div class="project-stack">
+        <span class="project-tech">Next.js</span>
+        <span class="project-tech">TypeScript</span>
+        <span class="project-tech">Tailwind</span>
+      </div>
+    </div>
+
+    <!-- ✏️ PROJECT 3 -->
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">⚡</div>
+        <div class="project-links">
+          <a class="project-link" href="#" title="GitHub">⌥</a>
+          <a class="project-link" href="#" title="Live Demo">↗</a>
+        </div>
+      </div>
+      <div class="project-title">Project Name <span class="project-wip">✏️ Edit</span></div>
+      <div class="project-desc">
+        Brief description of what this project does, what problem it solves,
+        and the key technical highlights.
+      </div>
+      <div class="project-stack">
+        <span class="project-tech">C# .NET Core</span>
+        <span class="project-tech">Redis</span>
+        <span class="project-tech">MySQL</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">04 · Contact</p>
+  <h2 class="section-title">Let's Connect</h2>
+  <div class="section-divider"></div>
+  <div class="contact-wrapper">
+    <p>
+      Have a project in mind, want to collaborate, or just want to say hi?<br>
+      Feel free to reach out — I'm always open to interesting conversations.
+    </p>
+    <div class="contact-links">
+      <a class="contact-chip" href="mailto:kanachai.niyom@gmail.com">
+        ✉️ kanachai.niyom@gmail.com
+      </a>
+      <!-- ✏️ เพิ่ม links อื่นๆ เช่น LinkedIn, Twitter ได้ที่นี่ -->
+      <a class="contact-chip" href="https://github.com/YOUR_GITHUB_USERNAME" target="_blank">
+        🐙 GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Designed & built by <span>Kanachai Niyomsilpchai</span> · 2025</p>
+</footer>
+
+</body>
+</html>
