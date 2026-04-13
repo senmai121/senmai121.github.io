@@ -239,29 +239,9 @@
     }
 
     /* GITHUB REPO CARDS */
-    .repo-meta { display: flex; align-items: center; gap: 1rem; margin-top: auto; padding-top: 1rem; flex-wrap: wrap; }
+    .repo-meta { display: flex; align-items: center; gap: 1rem; margin-top: auto; padding-top: 1rem; }
     .repo-stat { display: flex; align-items: center; gap: .3rem; font-size: .8rem; color: var(--muted); }
     .lang-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-
-    /* GROUP BADGE */
-    .group-badge {
-      display: inline-block; font-size: .65rem; font-weight: 500;
-      background: rgba(88,166,255,0.12); color: var(--accent);
-      border: 1px solid rgba(88,166,255,0.25);
-      padding: .1rem .45rem; border-radius: 10px;
-      vertical-align: middle; margin-left: .4rem;
-    }
-
-    /* REPO CHIPS — sub-links inside grouped card */
-    .repo-chips { display: flex; gap: .5rem; flex-wrap: wrap; margin: .75rem 0 0; }
-    .repo-chip {
-      display: inline-flex; align-items: center; gap: .35rem;
-      font-family: 'JetBrains Mono', monospace; font-size: .75rem;
-      padding: .3rem .7rem; border-radius: 6px;
-      border: 1px solid var(--border); color: var(--muted);
-      text-decoration: none; transition: all .2s; background: rgba(255,255,255,0.02);
-    }
-    .repo-chip:hover { border-color: var(--accent); color: var(--accent); background: rgba(88,166,255,0.06); }
 
     /* SKELETON LOADING */
     .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.5rem; }
@@ -511,7 +491,7 @@
         ✉️ kanachai.niyom@gmail.com
       </a>
       <!-- ✏️ เพิ่ม links อื่นๆ เช่น LinkedIn, Twitter ได้ที่นี่ -->
-      <a class="contact-chip" href="https://github.com/senmai121" target="_blank">
+      <a class="contact-chip" href="https://github.com/YOUR_GITHUB_USERNAME" target="_blank">
         🐙 GitHub
       </a>
     </div>
@@ -571,119 +551,32 @@
       </div>`).join('')}</div>`;
   }
 
-  const GH_ICON = `<svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>`;
-
-  // Detect repo role from name/topics
-  function detectRole(repo) {
-    const name = repo.name.toLowerCase();
-    const topics = repo.topics || [];
-    if (topics.includes('frontend') || topics.includes('ui') || /[-_](ui|web|front|client)$/.test(name) || name.endsWith('ui')) return 'UI';
-    if (topics.includes('backend') || topics.includes('api') || /[-_](api|backend|server|service|go)$/.test(name)) return 'API';
-    return null;
-  }
-
-  // Extract group name from topics: "group-my-project" → "My Project"
-  function getGroupKey(repo) {
-    const t = (repo.topics || []).find(t => t.startsWith('group-'));
-    return t ? t.slice(6) : null; // remove "group-" prefix
-  }
-
-  function formatName(slug) {
-    return slug.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-  }
-
-  // Group repos: returns array of project objects (single or grouped)
-  function groupRepos(repos) {
-    const groups = new Map();   // groupKey → [repos]
-    const singles = [];
-
-    repos.forEach(repo => {
-      const key = getGroupKey(repo);
-      if (key) {
-        if (!groups.has(key)) groups.set(key, []);
-        groups.get(key).push(repo);
-      } else {
-        singles.push(repo);
-      }
-    });
-
-    const projects = [];
-
-    // Grouped projects
-    groups.forEach((groupRepos, key) => {
-      const desc = groupRepos.find(r => r.description)?.description || '';
-      const langs = [...new Set(groupRepos.map(r => r.language).filter(Boolean))];
-      const stars = groupRepos.reduce((s, r) => s + r.stargazers_count, 0);
-      const homepage = groupRepos.find(r => r.homepage)?.homepage || '';
-      const updated = groupRepos.map(r => r.updated_at).sort().reverse()[0];
-      projects.push({ type: 'group', key, name: formatName(key), desc, langs, stars, homepage, updated, repos: groupRepos });
-    });
-
-    // Solo repos
-    singles.forEach(repo => {
-      const lang = repo.language || '';
-      projects.push({
-        type: 'single', name: formatName(repo.name),
-        desc: repo.description || '', langs: lang ? [lang] : [],
-        stars: repo.stargazers_count, homepage: repo.homepage || '',
-        updated: repo.updated_at, repos: [repo]
-      });
-    });
-
-    // Sort: grouped first, then by stars → updated
-    projects.sort((a, b) => {
-      if (a.type === 'group' && b.type !== 'group') return -1;
-      if (a.type !== 'group' && b.type === 'group') return 1;
-      return b.stars - a.stars || new Date(b.updated) - new Date(a.updated);
-    });
-
-    return projects;
-  }
-
-  function buildProjectCard(project) {
-    const icon = repoIcon(project.langs[0] || '');
-    const desc = project.desc || '<em style="color:var(--muted);font-size:.85rem">No description</em>';
-    const allLangs = project.langs.join(',');
-
-    // Repo sub-links
-    const repoLinks = project.repos.map(repo => {
-      const role = detectRole(repo);
-      const label = role || formatName(repo.name);
-      return `<a class="repo-chip" href="${repo.html_url}" target="_blank" rel="noopener">
-        ${GH_ICON}<span>${label}</span>
-      </a>`;
-    }).join('');
-
-    // Live link (from homepage of any repo in group)
-    const liveLink = project.homepage
-      ? `<a class="project-link" href="${project.homepage}" target="_blank" rel="noopener" title="Live Demo">↗</a>`
-      : '';
-
-    // Language dots
-    const langDots = project.langs.map(lang =>
-      `<span class="repo-stat"><span class="lang-dot" style="background:${langColor(lang)}"></span>${lang}</span>`
-    ).join('');
+  function buildRepoCard(repo) {
+    const lang = repo.language || '';
+    const desc = repo.description || '<em style="color:var(--muted);font-size:.85rem">No description</em>';
+    const color = langColor(lang);
+    const icon = repoIcon(lang);
+    const homepage = repo.homepage;
 
     return `
-      <div class="project-card" data-langs="${allLangs}" data-group="${project.type === 'group' ? '1' : '0'}">
+      <div class="project-card" data-lang="${lang}">
         <div class="project-header">
           <div class="project-icon">${icon}</div>
           <div class="project-links">
-            ${project.type === 'single'
-              ? `<a class="project-link" href="${project.repos[0].html_url}" target="_blank" rel="noopener" title="GitHub">${GH_ICON}</a>`
-              : ''}
-            ${liveLink}
+            <a class="project-link" href="${repo.html_url}" target="_blank" rel="noopener" title="GitHub">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+              </svg>
+            </a>
+            ${homepage ? `<a class="project-link" href="${homepage}" target="_blank" rel="noopener" title="Live">↗</a>` : ''}
           </div>
         </div>
-        <div class="project-title">
-          ${project.name}
-          ${project.type === 'group' ? '<span class="group-badge">2 repos</span>' : ''}
-        </div>
+        <div class="project-title">${repo.name.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase())}</div>
         <div class="project-desc">${desc}</div>
-        ${project.type === 'group' ? `<div class="repo-chips">${repoLinks}</div>` : ''}
         <div class="repo-meta">
-          ${langDots}
-          ${project.stars > 0 ? `<span class="repo-stat">⭐ ${project.stars}</span>` : ''}
+          ${lang ? `<span class="repo-stat"><span class="lang-dot" style="background:${color}"></span>${lang}</span>` : ''}
+          ${repo.stargazers_count > 0 ? `<span class="repo-stat">⭐ ${repo.stargazers_count}</span>` : ''}
+          ${repo.forks_count > 0 ? `<span class="repo-stat">🍴 ${repo.forks_count}</span>` : ''}
         </div>
       </div>`;
   }
@@ -693,27 +586,34 @@
     container.innerHTML = buildSkeletonHTML();
 
     try {
+      // ดึงเฉพาะ repos ที่ติด topic "portfolio"
       const res = await fetch(
         `https://api.github.com/search/repositories?q=user:${GITHUB_USERNAME}+topic:portfolio&sort=updated&per_page=30`,
         { headers: { 'Accept': 'application/vnd.github.mercy-preview+json' } }
       );
+
       if (!res.ok) throw new Error(`GitHub API ${res.status}`);
 
-      const repos = (await res.json()).items || [];
-      if (repos.length === 0) {
+      const data = await res.json();
+      const repos = data.items || [];
+
+      // Sort by stars then updated
+      const filtered = repos
+        .sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.updated_at) - new Date(a.updated_at))
+        .slice(0, 9);
+
+      if (filtered.length === 0) {
         container.innerHTML = `<div class="projects-error">
           ไม่พบ repo ที่ติด topic <code>portfolio</code><br><br>
-          ไปที่ GitHub repo → กด ⚙️ ข้างๆ "About" → เพิ่ม <strong>portfolio</strong> ใน Topics แล้ว refresh
+          ไปที่ GitHub repo → กด ⚙️ ข้างๆ "About" → เพิ่ม <strong>portfolio</strong> ใน Topics แล้ว refresh หน้านี้ครับ
         </div>`;
         return;
       }
 
-      const projects = groupRepos(repos).slice(0, 9);
-
-      // Build language filter buttons (from all projects)
-      const allLangs = [...new Set(projects.flatMap(p => p.langs))];
+      // Build language filter buttons
+      const langs = [...new Set(filtered.map(r => r.language).filter(Boolean))];
       const filterBar = document.getElementById('lang-filters');
-      allLangs.forEach(lang => {
+      langs.forEach(lang => {
         const btn = document.createElement('button');
         btn.className = 'filter-btn';
         btn.dataset.lang = lang;
@@ -721,15 +621,15 @@
         filterBar.appendChild(btn);
       });
 
-      // Render
+      // Render cards
       const grid = document.createElement('div');
       grid.className = 'projects-grid';
       grid.id = 'repos-grid';
-      grid.innerHTML = projects.map(buildProjectCard).join('');
+      grid.innerHTML = filtered.map(buildRepoCard).join('');
       container.innerHTML = '';
       container.appendChild(grid);
 
-      // Filter logic (match any lang in multi-lang card)
+      // Filter logic
       filterBar.addEventListener('click', e => {
         const btn = e.target.closest('.filter-btn');
         if (!btn) return;
@@ -737,17 +637,18 @@
         btn.classList.add('active');
         const lang = btn.dataset.lang;
         grid.querySelectorAll('.project-card').forEach(card => {
-          const cardLangs = card.dataset.langs.split(',');
-          card.style.display = (lang === 'all' || cardLangs.includes(lang)) ? '' : 'none';
+          card.style.display = (lang === 'all' || card.dataset.lang === lang) ? '' : 'none';
         });
       });
 
     } catch (err) {
-      container.innerHTML = `<div class="projects-error">
-        ⚠️ Could not load repositories.<br><br>
-        <a href="https://github.com/${GITHUB_USERNAME}?tab=repositories" target="_blank">View on GitHub</a>
-        <br><small style="opacity:.5">${err.message}</small>
-      </div>`;
+      container.innerHTML = `
+        <div class="projects-error">
+          ⚠️ Could not load repositories.<br><br>
+          Make sure <code>GITHUB_USERNAME</code> is set correctly,<br>
+          or <a href="https://github.com/${GITHUB_USERNAME}?tab=repositories" target="_blank">view them on GitHub</a>.
+          <br><small style="opacity:.5">${err.message}</small>
+        </div>`;
     }
   }
 
