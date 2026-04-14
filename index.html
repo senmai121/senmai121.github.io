@@ -198,6 +198,16 @@
       color: var(--muted);
       border-color: rgba(139,148,158,0.2);
     }
+    .skill-tag.orange {
+      background: rgba(255,166,0,0.08);
+      color: #ffa500;
+      border-color: rgba(255,166,0,0.2);
+    }
+    .skill-legend {
+      font-size: .72rem; color: var(--muted);
+      margin-top: .85rem; display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+    .skill-legend span { display: flex; align-items: center; gap: .3rem; }
 
     /* PROJECTS */
     .projects-grid { display: flex; flex-direction: column; gap: 1.5rem; max-width: 780px; margin: 0 auto; }
@@ -364,10 +374,10 @@
   <div class="hero-inner">
     <div class="hero-text">
       <p class="hero-tag">// Hello, World!</p>
-      <h1>I'm <span>Kanachai</span><br>Full-Stack Developer</h1>
+      <h1>I'm <span>Kanachai</span><br>Enterprise .NET & ERP Developer</h1>
       <p class="hero-sub">
-        Building robust backends and modern web applications with Go, C# .NET Core, and Next.js.
-        I care about clean architecture, performance, and developer experience.
+        10+ years building enterprise applications with ASP.NET and 7 years delivering
+        ERP solutions on NetSuite. Now exploring modern backend with Go and Next.js on the side.
       </p>
       <div class="hero-btns">
         <a class="btn btn-primary" href="#projects">View Projects</a>
@@ -390,17 +400,19 @@
   <div class="about-grid">
     <div class="about-text">
       <p>
-        Hi! I'm <strong>Kanachai Niyomsilpchai</strong>, a Full-Stack Developer who loves building
-        things that work well under the hood. My focus is on backend systems and APIs — making them
-        fast, maintainable, and scalable.
+        Hi! I'm <strong>Kanachai Niyomsilpchai</strong>, an enterprise developer with over
+        10 years of experience in ASP.NET and 7 years specializing in ERP implementations
+        on NetSuite — building integrations, customizations, and business-critical workflows
+        for real production systems.
       </p>
       <p>
-        On the frontend side, I work with Next.js to deliver clean, performant user interfaces.
-        I enjoy working across the stack and taking features from concept to production.
+        Outside of work I've been learning modern backend development with Go and experimenting
+        with Next.js for personal projects. These are still growing skills — no production
+        experience yet — but I find the ecosystem genuinely exciting and am investing time here.
       </p>
       <p>
-        <!-- ✏️ Add your personal story, background, or goals here -->
-        Always curious, always learning — and open to new challenges.
+        I care about writing code that is maintainable and honest about trade-offs.
+        Always open to interesting problems and new challenges.
       </p>
     </div>
     <div class="about-highlights">
@@ -408,7 +420,7 @@
         <div class="highlight-icon">🧑‍💻</div>
         <div>
           <div class="highlight-label">Role</div>
-          <div class="highlight-value">Full-Stack / Backend Developer</div>
+          <div class="highlight-value">Enterprise .NET & ERP Developer</div>
         </div>
       </div>
       <div class="highlight-item">
@@ -443,32 +455,40 @@
   <div class="section-divider"></div>
   <div class="skills-grid">
     <div class="skill-card">
-      <div class="skill-card-title">⚙️ Backend</div>
+      <div class="skill-card-title">💼 Enterprise (Production)</div>
       <div class="skill-tags">
-        <span class="skill-tag">Go</span>
-        <span class="skill-tag">C# .NET Core</span>
+        <span class="skill-tag">ASP.NET <small style="opacity:.6">10+ yrs</small></span>
+        <span class="skill-tag">NetSuite ERP <small style="opacity:.6">7 yrs</small></span>
+        <span class="skill-tag">SuiteScript</span>
         <span class="skill-tag">REST API</span>
-        <span class="skill-tag">gRPC</span>
-        <span class="skill-tag">Gin</span>
-        <span class="skill-tag">ASP.NET</span>
+        <span class="skill-tag">SQL Server</span>
+        <span class="skill-tag">C# (classic)</span>
       </div>
     </div>
     <div class="skill-card">
-      <div class="skill-card-title">🖥️ Frontend</div>
+      <div class="skill-card-title">🌱 Exploring</div>
       <div class="skill-tags">
+        <span class="skill-tag orange">Go</span>
+        <span class="skill-tag orange">.NET Core</span>
+        <span class="skill-tag orange">Gin</span>
+        <span class="skill-tag orange">gRPC</span>
         <span class="skill-tag green">Next.js</span>
         <span class="skill-tag green">React</span>
         <span class="skill-tag green">TypeScript</span>
         <span class="skill-tag green">Tailwind CSS</span>
       </div>
+      <div class="skill-legend">
+        <span><span style="color:#ffa500">■</span> Side projects / learning</span>
+        <span><span style="color:var(--accent2)">■</span> Personal projects</span>
+      </div>
     </div>
     <div class="skill-card">
       <div class="skill-card-title">🗄️ Database</div>
       <div class="skill-tags">
+        <span class="skill-tag">SQL Server</span>
         <span class="skill-tag gray">PostgreSQL</span>
         <span class="skill-tag gray">MySQL</span>
         <span class="skill-tag gray">Redis</span>
-        <span class="skill-tag gray">MongoDB</span>
       </div>
     </div>
     <div class="skill-card">
