@@ -248,8 +248,99 @@
       padding: .15rem .5rem; border-radius: 4px; margin-left: .5rem;
     }
 
+    /* PROJECT GALLERY THUMBNAILS */
+    .project-gallery {
+      margin: 1rem -1.5rem -1.5rem;
+      border-radius: 0 0 10px 10px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--bg);
+    }
+    .gallery-thumb {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border: none; background: var(--surface);
+      cursor: zoom-in; padding: 0;
+    }
+    .gallery-thumb:first-child {
+      grid-column: span 3;
+      aspect-ratio: 16/9;
+    }
+    .gallery-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top;
+      display: block;
+      transition: transform .25s, opacity .2s;
+    }
+    .gallery-thumb:hover img { transform: scale(1.04); }
+    .gallery-thumb .thumb-overlay {
+      position: absolute; inset: 0;
+      background: rgba(88,166,255,0.12);
+      opacity: 0; transition: opacity .2s;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 1.4rem;
+    }
+    .gallery-thumb:hover .thumb-overlay { opacity: 1; }
+
+    /* LIGHTBOX */
+    #lightbox {
+      position: fixed; inset: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #lightbox[hidden] { display: none !important; }
+    .lb-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(6px);
+      cursor: zoom-out;
+    }
+    .lb-img {
+      position: relative; z-index: 1;
+      max-width: min(90vw, 860px);
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+      transition: opacity .18s;
+      display: block;
+    }
+    .lb-btn {
+      position: absolute; z-index: 2;
+      background: rgba(22,27,34,0.85); border: 1px solid var(--border);
+      color: var(--text); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, border-color .2s;
+    }
+    .lb-btn:hover { background: rgba(88,166,255,0.2); border-color: var(--accent); color: var(--accent); }
+    .lb-close {
+      top: 1rem; right: 1rem;
+      width: 36px; height: 36px; border-radius: 50%;
+      font-size: 1.1rem;
+    }
+    .lb-arrow {
+      top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      font-size: 1.4rem;
+    }
+    .lb-prev { left: 1rem; }
+    .lb-next { right: 1rem; }
+    .lb-counter {
+      position: absolute; bottom: 1.2rem; left: 50%; transform: translateX(-50%);
+      z-index: 2;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .8rem; color: var(--muted);
+      background: rgba(13,17,23,0.7); border: 1px solid var(--border);
+      padding: .2rem .7rem; border-radius: 20px;
+    }
+    @media (max-width: 760px) {
+      .lb-arrow { display: none; }
+    }
+
     /* GITHUB REPO CARDS */
-    .repo-meta { display: flex; align-items: center; gap: 1rem; margin-top: auto; padding-top: 1rem; flex-wrap: wrap; }
+    .repo-meta { display: flex; align-items: center; gap: 1rem; margin-top: 1rem; padding-top: 1rem; flex-wrap: wrap; border-top: 1px solid var(--border); }
     .repo-stat { display: flex; align-items: center; gap: .3rem; font-size: .8rem; color: var(--muted); }
     .lang-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 
@@ -546,6 +637,16 @@
   </div>
 </section>
 
+<!-- LIGHTBOX -->
+<div id="lightbox" hidden>
+  <div class="lb-backdrop" id="lb-backdrop"></div>
+  <button class="lb-btn lb-close" id="lb-close" aria-label="Close">✕</button>
+  <button class="lb-btn lb-arrow lb-prev" id="lb-prev" aria-label="Previous">‹</button>
+  <img class="lb-img" id="lb-img" src="" alt="screenshot">
+  <button class="lb-btn lb-arrow lb-next" id="lb-next" aria-label="Next">›</button>
+  <div class="lb-counter" id="lb-counter"></div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <p>Designed & built by <span>Kanachai Niyomsilpchai</span> · 2025</p>
@@ -566,6 +667,7 @@
   const langColor  = l => LANG_COLORS[l] || LANG_COLORS.default;
   const repoIcon   = l => ({Go:'🔵','C#':'🟣',JavaScript:'🟡',TypeScript:'🔷',Python:'🐍',HTML:'🌐',CSS:'🎨',Shell:'🖥️'}[l] || '📦');
   const fmtName    = s => s.replace(/[-_]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+  const slugify    = s => s.toLowerCase().replace(/[\s_]+/g,'-');
 
   function buildSkeletonHTML() {
     return `<div class="skeleton-grid">${Array(6).fill(0).map(()=>`
@@ -606,12 +708,12 @@
       const stars    = g.reduce((s,r)=>s+r.stargazers_count,0);
       const homepage = g.find(r=>r.homepage)?.homepage||'';
       const updated  = g.map(r=>r.updated_at).sort().at(-1);
-      projects.push({ isGroup:true, name:fmtName(key), langs, stars, homepage, updated, repos:g });
+      projects.push({ isGroup:true, slug:key, name:fmtName(key), langs, stars, homepage, updated, repos:g });
     });
 
     singles.forEach(r => {
       const lang = r.language||'';
-      projects.push({ isGroup:false, name:fmtName(r.name), langs:lang?[lang]:[], stars:r.stargazers_count,
+      projects.push({ isGroup:false, slug:slugify(r.name), name:fmtName(r.name), langs:lang?[lang]:[], stars:r.stargazers_count,
                       homepage:r.homepage||'', updated:r.updated_at, repos:[r] });
     });
 
@@ -625,7 +727,8 @@
   }
 
   // ─── Card builder ────────────────────────────────────────────
-  function buildCard(project) {
+  function buildCard(project, projectMeta) {
+    const meta     = (projectMeta||{})[project.slug] || {};
     const icon     = repoIcon(project.langs[0]||'');
     const allLangs = project.langs.join(',');
     const liveLink = project.homepage
@@ -634,20 +737,31 @@
       `<span class="repo-stat"><span class="lang-dot" style="background:${langColor(l)}"></span>${l}</span>`
     ).join('');
 
+    // Gallery thumbnails
+    const shots = (meta.screenshots||[]).filter(s=>s);
+    const galleryHTML = shots.length ? `
+      <div class="project-gallery">
+        ${shots.map((src, i) => `
+          <button class="gallery-thumb" data-slug="${project.slug}" data-idx="${i}" aria-label="View screenshot ${i+1}">
+            <img src="${src}" alt="${project.name} screenshot ${i+1}" loading="lazy">
+            <div class="thumb-overlay">🔍</div>
+          </button>`).join('')}
+      </div>` : '';
+
+    // Description: custom > github
     let bodyHTML;
     if (project.isGroup) {
-      // Each sub-repo: chip + its own description
+      const customDesc = meta.description
+        ? `<div class="project-desc">${meta.description}</div>` : '';
       const rows = project.repos.map(r => {
         const role = detectRole(r);
-        const desc = r.description ? `<span class="repo-row-desc">${r.description}</span>` : '';
         return `<div class="repo-row">
           <a class="repo-chip" href="${r.html_url}" target="_blank" rel="noopener">${GH_ICON}<span>${role}</span></a>
-          ${desc}
         </div>`;
       }).join('');
-      bodyHTML = `<div class="repo-rows">${rows}</div>`;
+      bodyHTML = `${customDesc}<div class="repo-rows">${rows}</div>`;
     } else {
-      const desc = project.repos[0].description||'<em style="color:var(--muted);font-size:.85rem">No description</em>';
+      const desc = meta.description || project.repos[0].description || '<em style="color:var(--muted);font-size:.85rem">No description</em>';
       bodyHTML = `<div class="project-desc">${desc}</div>`;
     }
 
@@ -669,7 +783,60 @@
           ${langDots}
           ${project.stars>0?`<span class="repo-stat">⭐ ${project.stars}</span>`:''}
         </div>
+        ${galleryHTML}
       </div>`;
+  }
+
+  // ─── Lightbox ────────────────────────────────────────────────
+  let _lbImgs = [], _lbIdx = 0;
+  const lbEl      = () => document.getElementById('lightbox');
+  const lbImg     = () => document.getElementById('lb-img');
+  const lbCounter = () => document.getElementById('lb-counter');
+
+  function lbOpen(imgs, idx) {
+    _lbImgs = imgs; _lbIdx = idx;
+    lbShow();
+    lbEl().hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+  function lbShow() {
+    const img = lbImg();
+    img.style.opacity = '0';
+    img.src = _lbImgs[_lbIdx];
+    img.onload = () => { img.style.opacity = '1'; };
+    lbCounter().textContent = `${_lbIdx + 1} / ${_lbImgs.length}`;
+    document.getElementById('lb-prev').style.visibility = _lbImgs.length > 1 ? '' : 'hidden';
+    document.getElementById('lb-next').style.visibility = _lbImgs.length > 1 ? '' : 'hidden';
+  }
+  function lbClose() {
+    lbEl().hidden = true;
+    document.body.style.overflow = '';
+  }
+  function lbGo(dir) {
+    _lbIdx = (_lbIdx + dir + _lbImgs.length) % _lbImgs.length;
+    lbShow();
+  }
+
+  function initGallery(projectMeta) {
+    document.getElementById('lb-close').addEventListener('click', lbClose);
+    document.getElementById('lb-backdrop').addEventListener('click', lbClose);
+    document.getElementById('lb-prev').addEventListener('click', () => lbGo(-1));
+    document.getElementById('lb-next').addEventListener('click', () => lbGo(1));
+    document.addEventListener('keydown', e => {
+      if (lbEl().hidden) return;
+      if (e.key === 'Escape') lbClose();
+      if (e.key === 'ArrowLeft') lbGo(-1);
+      if (e.key === 'ArrowRight') lbGo(1);
+    });
+
+    document.querySelectorAll('.gallery-thumb').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const slug = btn.dataset.slug;
+        const idx  = +btn.dataset.idx;
+        const imgs = (projectMeta[slug]?.screenshots || []).filter(s=>s);
+        if (imgs.length) lbOpen(imgs, idx);
+      });
+    });
   }
 
   // ─── Main ────────────────────────────────────────────────────
@@ -678,13 +845,17 @@
     container.innerHTML = buildSkeletonHTML();
 
     try {
-      const res = await fetch(
-        `https://api.github.com/search/repositories?q=user:${GITHUB_USERNAME}+topic:portfolio&sort=updated&per_page=30`,
-        { headers: { Accept: 'application/vnd.github.mercy-preview+json' } }
-      );
-      if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+      const [ghRes, metaRes] = await Promise.all([
+        fetch(
+          `https://api.github.com/search/repositories?q=user:${GITHUB_USERNAME}+topic:portfolio&sort=updated&per_page=30`,
+          { headers: { Accept: 'application/vnd.github.mercy-preview+json' } }
+        ),
+        fetch('projects.json').catch(() => null)
+      ]);
+      if (!ghRes.ok) throw new Error(`GitHub API ${ghRes.status}`);
 
-      const repos = (await res.json()).items || [];
+      const projectMeta = metaRes?.ok ? await metaRes.json() : {};
+      const repos = (await ghRes.json()).items || [];
       if (!repos.length) {
         container.innerHTML = `<div class="projects-error">
           ไม่พบ repo ที่ติด topic <code>portfolio</code><br><br>
@@ -710,9 +881,10 @@
       const grid = document.createElement('div');
       grid.className = 'projects-grid';
       grid.id = 'repos-grid';
-      grid.innerHTML = projects.map(buildCard).join('');
+      grid.innerHTML = projects.map(p => buildCard(p, projectMeta)).join('');
       container.innerHTML = '';
       container.appendChild(grid);
+      initGallery(projectMeta);
 
       // Filter (any lang match)
       filterBar.addEventListener('click', e => {

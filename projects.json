@@ -1,0 +1,17 @@
+{
+  "resume-analyzer": {
+    "description": "AI-powered resume screening tool — upload up to 3 PDF resumes, specify a job position and requirements, and get per-candidate suitability scores, skill gap analysis, recruiter advice, and suggested interview questions. Includes a <strong>side-by-side candidate comparison</strong> report ranked by suitability score with strengths, weaknesses, and a final hiring recommendation. Built with Next.js and .NET Core.<br><small style=\"color:var(--muted);opacity:.7\">* All names and data shown in screenshots are fictional and for demonstration purposes only <br/>* ชื่อและข้อมูลในภาพตัวอย่างเป็นข้อมูลสมมติเพื่อประกอบการสาธิตเท่านั้น</small>",
+    "screenshots": [
+      "Images/resumeanalyzer/Screenshot 2569-04-17 at 12.45.03.png",
+      "Images/resumeanalyzer/Screenshot 2569-04-17 at 12.47.02.png",
+      "Images/resumeanalyzer/Screenshot 2569-04-17 at 12.50.30.png",
+      "Images/resumeanalyzer/Screenshot 2569-04-17 at 14.22.03.png",
+      "Images/resumeanalyzer/Screenshot 2569-04-17 at 14.22.16.png",
+      "Images/resumeanalyzer/Screenshot 2569-04-17 at 14.22.36.png"
+    ]
+  },
+  "personal-financial-agent": {
+    "description": "Personal financial advisory agent — tracks income, expenses, and gives AI-powered financial insights. Go backend API with a Next.js frontend.",
+    "screenshots": []
+  }
+}
