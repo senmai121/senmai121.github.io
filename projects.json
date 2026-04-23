@@ -10,6 +10,10 @@
       "Images/resumeanalyzer/Screenshot 2569-04-17 at 14.22.36.png"
     ]
   },
+  "sales-analyzer": {
+    "description": "AI-powered sales analytics platform — query products in <strong>natural language</strong> and let the AI extract filters (keyword, category, price range, rating) to search the database instantly. Features include <strong>AI-driven product ranking</strong> that scores and ranks items by ratings, review volume, and sentiment; per-product <strong>review summaries</strong> with average rating breakdowns; <strong>similar product recommendations</strong>; and a full-catalog <strong>insights dashboard</strong> surfacing top-performing brands, underperforming products, category gaps, and pricing recommendations. AI responses stream in real-time via <strong>SSE</strong>. Built with a Go (chi) backend, PostgreSQL database, Next.js frontend, and LLM calls routed through <strong>OpenRouter</strong>.",
+    "screenshots": []
+  },
   "personal-financial-agent": {
     "description": "Personal financial advisory agent — tracks income, expenses, and gives AI-powered financial insights. Go backend API with a Next.js frontend.",
     "screenshots": []
