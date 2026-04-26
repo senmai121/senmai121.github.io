@@ -13,11 +13,13 @@
   "sales-analyzer": {
     "description": "Full-featured <strong>Point of Sale (POS)</strong> system with AI-powered analytics.<br><br><strong>POS</strong><ul><li>Process sales through <strong>multiple payment channels</strong> — cash, QR code, and card</li><li>Dedicated <strong>POS dashboard</strong> with real-time order tracking and receipt generation</li></ul><strong>AI Analytics</strong><ul><li>Query products in <strong>natural language</strong> — AI extracts filters (keyword, category, price range, rating) instantly</li><li><strong>AI-driven product ranking</strong> scored by ratings, review volume, and sentiment</li><li>Per-product <strong>review summaries</strong> with average rating breakdowns</li><li><strong>Similar product recommendations</strong></li><li>Full-catalog <strong>insights dashboard</strong> — top brands, underperforming products, category gaps, and pricing recommendations</li><li>AI responses stream in real-time via <strong>SSE</strong></li></ul><strong>Stack:</strong> Go (chi) · PostgreSQL · Next.js · OpenRouter",
     "screenshots": [
-      "Images/salesanalyzer/Screenshot 2569-04-23 at 19.25.21.png",
-      "Images/salesanalyzer/Screenshot 2569-04-23 at 20.00.24.png",
-      "Images/salesanalyzer/Screenshot 2569-04-23 at 19.28.02.png",
-      "Images/salesanalyzer/Screenshot 2569-04-23 at 19.29.23.png",
-      "Images/salesanalyzer/Screenshot 2569-04-23 at 19.29.37.png"
+      "Images/salesanalyzer/Screenshot 2569-04-26 at 15.31.11.png",
+      "Images/salesanalyzer/Screenshot 2569-04-26 at 15.31.23.png",
+      "Images/salesanalyzer/Screenshot 2569-04-26 at 15.31.40.png",
+      "Images/salesanalyzer/Screenshot 2569-04-26 at 15.32.23.png",
+      "Images/salesanalyzer/Screenshot 2569-04-26 at 15.32.45.png",
+      "Images/salesanalyzer/Screenshot 2569-04-26 at 15.33.24.png",
+      "Images/salesanalyzer/Screenshot 2569-04-26 at 15.33.35.png"
     ]
   },
   "personal-financial-agent": {
