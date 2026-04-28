@@ -22,6 +22,22 @@
       "Images/salesanalyzer/Screenshot 2569-04-26 at 15.33.35.png"
     ]
   },
+  
+  "field-service-management": {
+    "description": "Field Service Management system for managing assets and technician workflows.<br><br><strong>Master Data</strong><ul><li>Manage assets, locations, and technician records</li><li>Pin and visualize <strong>asset locations on an interactive map</strong></li></ul><strong>Work Orders</strong><ul><li>Create and assign <strong>work orders</strong> to technicians</li><li>Technicians can update job status and progress in real-time</li></ul><strong>Stack:</strong> Go (chi) · Next.js · PostgreSQL (Supabase)",
+    "screenshots": [
+      "Images/fieldservicemanagement/Screenshot 2569-04-28 at 14.37.43.png",
+      "Images/fieldservicemanagement/Screenshot 2569-04-28 at 14.38.10.png",
+      "Images/fieldservicemanagement/Screenshot 2569-04-28 at 14.38.17.png",
+      "Images/fieldservicemanagement/Screenshot 2569-04-28 at 14.38.26.png",
+      "Images/fieldservicemanagement/Screenshot 2569-04-28 at 14.38.32.png",
+      "Images/fieldservicemanagement/Screenshot 2569-04-28 at 14.38.40.png",
+      "Images/fieldservicemanagement/Screenshot 2569-04-28 at 14.47.58.png",
+      "Images/fieldservicemanagement/Screenshot 2569-04-28 at 14.48.07.png",
+      "Images/fieldservicemanagement/Screenshot 2569-04-28 at 14.48.20.png",
+      "Images/fieldservicemanagement/Screenshot 2569-04-28 at 14.52.33.png"
+    ]
+  },
   "personal-financial-agent": {
     "description": "Personal financial advisory agent — tracks income, expenses, and gives AI-powered financial insights. Go backend API with a Next.js frontend.",
     "screenshots": []
