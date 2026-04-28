@@ -223,6 +223,7 @@
     .project-icon { font-size: 1.8rem; }
     .project-links { display: flex; gap: .5rem; }
     .project-link {
+      position: relative;
       display: flex; align-items: center; justify-content: center;
       width: 32px; height: 32px; border-radius: 6px;
       border: 1px solid var(--border);
@@ -230,6 +231,18 @@
       transition: all .2s;
     }
     .project-link:hover { border-color: var(--accent); color: var(--accent); }
+    .project-link[data-tooltip]::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 7px);
+      left: 50%; transform: translateX(-50%);
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text); font-size: .7rem; font-family: 'Inter', sans-serif;
+      white-space: nowrap; padding: .2rem .55rem; border-radius: 4px;
+      pointer-events: none; opacity: 0; transition: opacity .15s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .project-link[data-tooltip]:hover::after { opacity: 1; }
     .project-title { font-size: 1.05rem; font-weight: 600; margin-bottom: .5rem; }
     .project-desc { color: var(--muted); font-size: .9rem; flex: 1; margin-bottom: 1.2rem; }
     .project-stack { display: flex; flex-wrap: wrap; gap: .4rem; }
@@ -732,9 +745,9 @@
     const icon     = repoIcon(project.langs[0]||'');
     const allLangs = project.langs.join(',');
     const liveLink = project.homepage
-      ? `<a class="project-link" href="${project.homepage}" target="_blank" rel="noopener" title="Live">↗</a>` : '';
+      ? `<a class="project-link" href="${project.homepage}" target="_blank" rel="noopener" data-tooltip="Live Demo">↗</a>` : '';
     const manualLink = meta.userManual
-      ? `<a class="project-link" href="${meta.userManual}" target="_blank" rel="noopener" title="User Manual">📖</a>` : '';
+      ? `<a class="project-link" href="${meta.userManual}" target="_blank" rel="noopener" data-tooltip="User Manual">📖</a>` : '';
     const langDots = project.langs.map(l=>
       `<span class="repo-stat"><span class="lang-dot" style="background:${langColor(l)}"></span>${l}</span>`
     ).join('');
@@ -772,7 +785,7 @@
         <div class="project-header">
           <div class="project-icon">${icon}</div>
           <div class="project-links">
-            ${!project.isGroup ? `<a class="project-link" href="${project.repos[0].html_url}" target="_blank" rel="noopener" title="GitHub">${GH_ICON}</a>` : ''}
+            ${!project.isGroup ? `<a class="project-link" href="${project.repos[0].html_url}" target="_blank" rel="noopener" data-tooltip="GitHub">${GH_ICON}</a>` : ''}
             ${liveLink}
             ${manualLink}
           </div>
