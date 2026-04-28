@@ -25,6 +25,7 @@
   
   "field-service-management": {
     "description": "Field Service Management system for managing assets and technician workflows.<br><br><strong>Master Data</strong><ul><li>Manage assets, locations, and technician records</li><li>Pin and visualize <strong>asset locations on an interactive map</strong></li></ul><strong>Work Orders</strong><ul><li>Create and assign <strong>work orders</strong> to technicians</li><li>Technicians can update job status and progress in real-time</li></ul><strong>Stack:</strong> Go (chi) · Next.js · PostgreSQL (Supabase)",
+    "userManual": "usermanual/fieldservicemanagement/manual.html",
     "screenshots": [
       "Images/fieldservicemanagement/Screenshot 2569-04-28 at 14.37.43.png",
       "Images/fieldservicemanagement/Screenshot 2569-04-28 at 14.38.10.png",

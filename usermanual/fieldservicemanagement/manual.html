@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Field Service Management System — User Manual</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Sarabun', 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #1e293b;
+    background: #fff;
+  }
+
+  /* ── Cover Page ── */
+  .cover {
+    width: 100%;
+    height: 100vh;
+    min-height: 297mm;
+    background: #020617;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    page-break-after: always;
+    text-align: center;
+    padding: 60px;
+  }
+  .cover-diamond {
+    width: 64px; height: 64px; margin-bottom: 32px;
+    background: #fbbf24;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+  .cover h1 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #fbbf24;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .cover h2 {
+    font-size: 16px;
+    font-weight: 300;
+    color: #94a3b8;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 12px;
+  }
+  .cover-divider {
+    width: 60px; height: 1px;
+    background: #334155;
+    margin: 40px auto;
+  }
+  .cover-meta { color: #475569; font-size: 13px; line-height: 2; }
+  .cover-meta span { color: #94a3b8; }
+  .cover-version {
+    margin-top: 60px;
+    border: 1px solid #1e3a5f;
+    padding: 8px 24px;
+    color: #3b82f6;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* ── TOC ── */
+  .toc-page {
+    padding: 60px 80px;
+    page-break-after: always;
+    min-height: 297mm;
+  }
+  .toc-page h2 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px dotted #e2e8f0;
+  }
+  .toc-num { font-size: 11px; color: #fbbf24; font-weight: 700; width: 28px; flex-shrink: 0; }
+  .toc-title { flex: 1; font-size: 14px; color: #1e293b; }
+  .toc-title .sub { font-size: 12px; color: #64748b; margin-left: 16px; }
+  .toc-page-num { font-size: 12px; color: #94a3b8; font-variant-numeric: tabular-nums; }
+
+  /* ── Section Pages ── */
+  .section {
+    padding: 60px 80px;
+    page-break-before: always;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f1f5f9;
+  }
+  .section-num {
+    width: 48px; height: 48px;
+    background: #fbbf24;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: #020617;
+    flex-shrink: 0;
+  }
+  .section-title h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+  }
+  .section-title p {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 2px;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── Content ── */
+  .lang-block {
+    margin-bottom: 32px;
+  }
+  .lang-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+  }
+  .lang-th { background: #fef3c7; color: #92400e; }
+  .lang-en { background: #dbeafe; color: #1e40af; }
+
+  .content-text { font-size: 14px; line-height: 1.8; color: #334155; }
+  .content-text strong { color: #0f172a; }
+
+  /* Steps */
+  .steps { counter-reset: step; margin: 16px 0; }
+  .step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .step-num {
+    counter-increment: step;
+    width: 28px; height: 28px;
+    background: #0f172a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fbbf24;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content { flex: 1; font-size: 13px; color: #334155; line-height: 1.7; }
+  .step-content strong { color: #0f172a; }
+
+  /* Screenshot placeholder */
+  .screenshot-box {
+    width: 100%;
+    min-height: 260px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    background: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    padding: 24px;
+    text-align: center;
+  }
+  .screenshot-box .icon { font-size: 32px; margin-bottom: 12px; opacity: 0.4; }
+  .screenshot-box .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #94a3b8;
+  }
+  .screenshot-box .desc { font-size: 12px; color: #cbd5e1; margin-top: 4px; }
+
+  /* Info boxes */
+  .info-box {
+    border-left: 3px solid #3b82f6;
+    background: #eff6ff;
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+    color: #1e3a5f;
+  }
+  .warn-box {
+    border-left: 3px solid #f59e0b;
+    background: #fffbeb;
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+    color: #78350f;
+  }
+  .tip-box {
+    border-left: 3px solid #10b981;
+    background: #ecfdf5;
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+    color: #064e3b;
+  }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  th {
+    background: #0f172a;
+    color: #fbbf24;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; color: #334155; }
+  tr:nth-child(even) td { background: #f8fafc; }
+
+  /* Status badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-draft     { background: #f1f5f9; color: #475569; }
+  .badge-assigned  { background: #dbeafe; color: #1d4ed8; }
+  .badge-progress  { background: #fef3c7; color: #b45309; }
+  .badge-hold      { background: #fce7f3; color: #9d174d; }
+  .badge-complete  { background: #d1fae5; color: #065f46; }
+
+  /* Grid layout for columns */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 16px 0; }
+
+  /* Print */
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .section { page-break-before: always; }
+    .no-break { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     COVER PAGE
+════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-diamond"></div>
+  <h1>Field Service<br>Management</h1>
+  <h2>User Manual — คู่มือการใช้งาน</h2>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <span>ระบบ / System</span><br>
+    Field Service Management System (FSM)<br><br>
+    <span>เวอร์ชัน / Version</span><br>
+    1.0.0<br><br>
+    <span>ภาษา / Language</span><br>
+    ภาษาไทย / English (Bilingual)
+  </div>
+  <div class="cover-version">v1.0 — 2025</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TABLE OF CONTENTS
+════════════════════════════════════════════ -->
+<div class="toc-page">
+  <h2>สารบัญ / Table of Contents</h2>
+
+  <div class="toc-item">
+    <span class="toc-num">1</span>
+    <span class="toc-title">ภาพรวมระบบ <span class="sub">System Overview</span></span>
+    <span class="toc-page-num">3</span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-num">2</span>
+    <span class="toc-title">การสมัครสมาชิก <span class="sub">Register</span></span>
+    <span class="toc-page-num">4</span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-num">3</span>
+    <span class="toc-title">การเข้าสู่ระบบ <span class="sub">Login</span></span>
+    <span class="toc-page-num">5</span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-num">4</span>
+    <span class="toc-title">การจัดการ Master Data <span class="sub">Master Data Management</span></span>
+    <span class="toc-page-num">6</span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-num">5</span>
+    <span class="toc-title">การสร้าง Work Order <span class="sub">Creating a Work Order</span></span>
+    <span class="toc-page-num">11</span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-num">6</span>
+    <span class="toc-title">การมอบหมายช่าง <span class="sub">Assigning Technicians</span></span>
+    <span class="toc-page-num">13</span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-num">7</span>
+    <span class="toc-title">การอัปเดตสถานะงาน (ช่าง) <span class="sub">Technician — Update Work Status</span></span>
+    <span class="toc-page-num">15</span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-num">8</span>
+    <span class="toc-title">สถานะ Work Order ทั้งหมด <span class="sub">Work Order Status Reference</span></span>
+    <span class="toc-page-num">17</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 1 — OVERVIEW
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-title">
+      <h3>ภาพรวมระบบ</h3>
+      <p>System Overview</p>
+    </div>
+  </div>
+
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">
+      Field Service Management System (FSM) คือระบบจัดการงานภาคสนามที่ช่วยให้องค์กรสามารถ
+      บริหารจัดการ <strong>ลูกค้า, สถานที่, ทรัพย์สิน, ช่าง</strong> และ <strong>ใบสั่งงาน (Work Order)</strong>
+      ได้อย่างมีประสิทธิภาพ ระบบรองรับผู้ใช้งาน 2 บทบาทหลัก ได้แก่
+      <strong>ผู้ดูแลระบบ (Admin)</strong> และ <strong>ช่างเทคนิค (Technician)</strong>
+    </div>
+  </div>
+
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">
+      The Field Service Management System (FSM) helps organizations efficiently manage
+      <strong>customers, sites, assets, technicians</strong>, and <strong>work orders</strong>.
+      The system supports two primary roles: <strong>Administrator (Admin)</strong>
+      and <strong>Technician</strong>.
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top:24px;">
+    <div>
+      <table>
+        <tr><th colspan="2">บทบาทและสิทธิ์ / Roles & Permissions</th></tr>
+        <tr><td><strong>Admin</strong></td><td>จัดการข้อมูลทั้งหมด, สร้างและมอบหมายงาน</td></tr>
+        <tr><td><strong>Technician</strong></td><td>ดูงานที่ได้รับมอบหมาย, อัปเดตสถานะ</td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr><th colspan="2">URL</th></tr>
+        <tr><td>ระบบ</td><td>field-service-management-ui.vercel.app</td></tr>
+        <tr><td>Browser</td><td>Chrome / Edge (แนะนำ)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!--<div class="screenshot-box">
+    <div class="icon">🖥️</div>
+    <div class="label">Screenshot: หน้าแรกของระบบ / System Homepage</div>
+    <div class="desc">field-service-management-ui.vercel.app</div>
+  </div>-->
+  <img src="screenshot/home.png" alt="Home"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 2 — REGISTER
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-title">
+      <h3>การสมัครสมาชิก</h3>
+      <p>Register — Creating a new account</p>
+    </div>
+  </div>
+
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">
+      การสมัครสมาชิกใช้สำหรับสร้างบัญชีผู้ใช้ใหม่ในระบบ ผู้ใช้ที่สมัครจะได้รับสิทธิ์เข้าถึงระบบ
+      และสามารถถูกแต่งตั้งเป็นช่างเทคนิคได้ในภายหลัง
+    </div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">
+      Registration creates a new user account. After registering, the account can be linked
+      to a Technician profile by an Admin.
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        ไปที่ URL ระบบ แล้วคลิก <strong>"Register"</strong> ที่ด้านล่างของหน้า Login<br>
+        <em>Go to the system URL and click <strong>"Register"</strong> below the login form.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        กรอก <strong>Username, Email</strong> และ <strong>Password</strong><br>
+        <em>Fill in your <strong>Username, Email</strong>, and <strong>Password</strong>.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        คลิก <strong>"Register"</strong> ระบบจะสร้างบัญชีและ Redirect ไปหน้าหลักอัตโนมัติ<br>
+        <em>Click <strong>"Register"</strong>. The system will create your account and redirect to the dashboard.</em>
+      </div>
+    </div>
+  </div>
+
+  <!--<div class="screenshot-box">
+    <div class="icon">📝</div>
+    <div class="label">Screenshot: หน้า Register / Registration Page</div>
+    <div class="desc">/register</div>
+  </div>-->
+  <img src="screenshot/register.png" alt="Register"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+
+  <div class="warn-box">
+    ⚠️ <strong>หมายเหตุ / Note:</strong> Email แต่ละ Address ใช้ได้เพียงครั้งเดียว หากพบว่า Email ซ้ำระบบจะแจ้งเตือน<br>
+    <em>Each email address can only be registered once. Duplicate emails will be rejected.</em>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 3 — LOGIN
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-title">
+      <h3>การเข้าสู่ระบบ</h3>
+      <p>Login — Signing into the system</p>
+    </div>
+  </div>
+
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">
+      หลังจากสมัครสมาชิกแล้ว ให้ใช้ Email และ Password เข้าสู่ระบบ
+      ระบบจะจำ Session ไว้จนกว่าจะไม่มีการใช้งานเกิน <strong>2 ชั่วโมง</strong> หรือปิด Browser
+    </div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">
+      Use your Email and Password to sign in. The session remains active until
+      <strong>2 hours of inactivity</strong> or the browser is closed.
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        กรอก <strong>Email</strong> และ <strong>Password</strong> ในฟอร์ม Login<br>
+        <em>Enter your <strong>Email</strong> and <strong>Password</strong> in the login form.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        คลิก <strong>"Sign In"</strong><br>
+        <em>Click <strong>"Sign In"</strong>.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        ระบบจะ Redirect ไปหน้าหลักโดยอัตโนมัติ<br>
+        <em>The system will redirect you to the main dashboard automatically.</em>
+      </div>
+    </div>
+  </div>
+
+  <!--<div class="screenshot-box">
+    <div class="icon">🔐</div>
+    <div class="label">Screenshot: หน้า Login / Login Page</div>
+    <div class="desc">/login</div>
+  </div>-->
+   <img src="screenshot/login.png" alt="Log In"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+
+  <div class="tip-box">
+    💡 <strong>เคล็ดลับ / Tip:</strong> หากเซสชั่นหมดอายุ ระบบจะพาไปหน้า Login อัตโนมัติ สามารถ Login ใหม่ได้ทันที<br>
+    <em>If your session expires, the system will redirect to the login page automatically.</em>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 4 — MASTER DATA
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-title">
+      <h3>การจัดการ Master Data</h3>
+      <p>Master Data Management</p>
+    </div>
+  </div>
+
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">
+      Master Data คือข้อมูลพื้นฐานของระบบที่ต้องตั้งค่าก่อนเริ่มใช้งาน ประกอบด้วย
+      ข้อมูลลูกค้า, สถานที่, ทรัพย์สิน, ช่างเทคนิค และข้อมูลอ้างอิงต่างๆ
+    </div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">
+      Master Data contains the foundational records that must be configured before using the system,
+      including customers, sites, assets, technicians, and reference data.
+    </div>
+  </div>
+
+  <div class="info-box">
+    📋 <strong>แนะนำลำดับการตั้งค่า / Recommended Setup Order:</strong><br>
+    ประเภทบริการ → ระดับความสำคัญ → ประเภทอุปกรณ์ → ลูกค้า → สถานที่ → ช่าง → อุปกรณ์<br>
+    <em>Service Types → Priority Levels → Asset Categories → Customers → Sites → Technicians → Assets</em>
+  </div>
+
+  <!-- 4.1 Customers -->
+  <h4 style="margin:28px 0 12px; font-size:16px; color:#0f172a; border-left:3px solid #fbbf24; padding-left:12px;">
+    4.1 ลูกค้า / Customers
+  </h4>
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">ไปที่เมนู <strong>Master → Customers</strong> เพื่อเพิ่ม แก้ไข หรือลบข้อมูลลูกค้า ข้อมูลที่จำเป็น ได้แก่ ชื่อลูกค้า</div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">Navigate to <strong>Master → Customers</strong> to add, edit, or remove customers. The customer name is required.</div>
+  </div>
+  <!--<div class="screenshot-box" style="min-height:200px;">
+    <div class="icon">🏢</div>
+    <div class="label">Screenshot: หน้า Customers / Customers Page</div>
+    <div class="desc">/master/customers</div>
+  </div>-->
+  <img src="screenshot/customer.png" alt="Customer"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+
+  <!-- 4.2 Customer Sites -->
+  <h4 style="margin:28px 0 12px; font-size:16px; color:#0f172a; border-left:3px solid #fbbf24; padding-left:12px;">
+    4.2 สถานที่ลูกค้า / Customer Sites
+  </h4>
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">ไปที่ <strong>Master → Customer Sites</strong> เพื่อเพิ่มสาขาหรือสถานที่ของลูกค้า แต่ละสถานที่สามารถระบุตำแหน่งบนแผนที่ได้ โดยคลิกบนแผนที่ หรือค้นหาชื่อสถานที่ หรือใช้ปุ่ม <strong>"📍 ฉัน"</strong> เพื่อใช้ตำแหน่งปัจจุบัน</div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">Go to <strong>Master → Customer Sites</strong> to add branches or locations for each customer. You can set a map location by clicking on the map, searching for a place, or clicking <strong>"📍 Me"</strong> to use your current location.</div>
+  </div>
+ <!-- <div class="screenshot-box" style="min-height:200px;">
+    <div class="icon">📍</div>
+    <div class="label">Screenshot: หน้า Customer Sites พร้อม Map Picker</div>
+    <div class="desc">/master/customer-sites</div>
+  </div>-->
+    <img src="screenshot/site1.png" alt="Customer Site"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+     <img src="screenshot/site2.png" alt="Customer Site"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+
+  <!-- 4.3 Technicians -->
+  <h4 style="margin:28px 0 12px; font-size:16px; color:#0f172a; border-left:3px solid #fbbf24; padding-left:12px;">
+    4.3 ช่างเทคนิค / Technicians
+  </h4>
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">
+      ไปที่ <strong>Master → Technicians</strong> เพื่อเพิ่มข้อมูลช่าง
+      สำคัญ: ต้องผูก <strong>System User</strong> ให้กับช่างเพื่อให้ช่างสามารถ Login และดูงานของตัวเองได้
+      โดยเลือก User จาก Dropdown "System User (Login Account)"
+    </div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">
+      Go to <strong>Master → Technicians</strong> to manage technician profiles.
+      Important: you must link a <strong>System User</strong> to each technician so they can log in and view their assigned work orders.
+      Select the user from the "System User (Login Account)" dropdown.
+    </div>
+  </div>
+  <!--
+  <div class="screenshot-box" style="min-height:200px;">
+    <div class="icon">👷</div>
+    <div class="label">Screenshot: หน้า Technicians / Technicians Page</div>
+    <div class="desc">/master/technicians</div>
+  </div>-->
+  <img src="screenshot/technician.png" alt="Technician"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+
+  <img src="screenshot/technician2.png" alt="Technician"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+
+  <!-- 4.4 Assets -->
+  <h4 style="margin:28px 0 12px; font-size:16px; color:#0f172a; border-left:3px solid #fbbf24; padding-left:12px;">
+    4.4 อุปกรณ์ / Assets
+  </h4>
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">
+      ไปที่ <strong>Master → Assets</strong> เพื่อลงทะเบียนอุปกรณ์หรือสิ่งของที่ต้องการจัดการ
+      แต่ละ Asset ผูกกับสถานที่ลูกค้า และสามารถระบุวันหมดประกัน ยี่ห้อ รุ่น และตำแหน่งบนแผนที่ได้
+    </div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">
+      Go to <strong>Master → Assets</strong> to register equipment or devices.
+      Each asset is linked to a customer site and can include warranty expiry date, brand, model, and map location.
+    </div>
+  </div>
+  <!--<div class="screenshot-box" style="min-height:200px;">
+    <div class="icon">🔧</div>
+    <div class="label">Screenshot: หน้า Assets / Assets Page</div>
+    <div class="desc">/master/assets</div>
+  </div>-->
+  <img src="screenshot/asset.png" alt="Asset"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+  <img src="screenshot/asset2.png" alt="Asset"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+  <!-- 4.5 Reference Data -->
+  <h4 style="margin:28px 0 12px; font-size:16px; color:#0f172a; border-left:3px solid #fbbf24; padding-left:12px;">
+    4.5 ข้อมูลอ้างอิง / Reference Data
+  </h4>
+  <table>
+    <tr>
+      <th>เมนู / Menu</th>
+      <th>คำอธิบาย / Description</th>
+      <th>ตัวอย่าง / Example</th>
+    </tr>
+    <tr>
+      <td>Service Types</td>
+      <td>ประเภทงานบริการ / Types of service</td>
+      <td>ซ่อมบำรุง, ติดตั้ง, ตรวจสอบ</td>
+    </tr>
+    <tr>
+      <td>Priority Levels</td>
+      <td>ระดับความเร่งด่วน / Urgency levels</td>
+      <td>Critical, High, Medium, Low</td>
+    </tr>
+    <tr>
+      <td>Asset Categories</td>
+      <td>ประเภทอุปกรณ์ / Equipment categories</td>
+      <td>เครื่องปรับอากาศ, ลิฟต์, ไฟฟ้า</td>
+    </tr>
+    <tr>
+      <td>Skill Categories</td>
+      <td>ทักษะช่าง / Technician skill types</td>
+      <td>ระบบไฟฟ้า, ระบบน้ำ, HVAC</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 5 — WORK ORDER
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div class="section-title">
+      <h3>การสร้าง Work Order</h3>
+      <p>Creating a Work Order</p>
+    </div>
+  </div>
+
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">
+      Work Order คือใบสั่งงานที่ใช้ติดตามงานซ่อมหรืองานบริการ ระบบจะสร้างหมายเลข Work Order
+      ให้อัตโนมัติ (เช่น <strong>WO-20250428-0001</strong>)
+    </div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">
+      A Work Order tracks a service or repair job. The system automatically generates a
+      Work Order number (e.g., <strong>WO-20250428-0001</strong>).
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        ไปที่เมนู <strong>Work Orders</strong> แล้วคลิก <strong>"+ New Work Order"</strong><br>
+        <em>Go to the <strong>Work Orders</strong> menu and click <strong>"+ New Work Order"</strong>.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        กรอก <strong>Title</strong> (ชื่องาน) ซึ่งเป็นฟิลด์บังคับ<br>
+        <em>Enter the <strong>Title</strong> (job name) — this field is required.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        เลือก <strong>Customer</strong> และ <strong>Site</strong> ที่ต้องการ (บังคับ)<br>
+        <em>Select the <strong>Customer</strong> and <strong>Site</strong> (required).</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        เลือก <strong>Asset</strong> ที่ต้องซ่อม (ถ้ามี) ระบบจะตรวจสอบวันหมดประกันอัตโนมัติ<br>
+        <em>Select the <strong>Asset</strong> to be serviced (optional). The system will automatically check the warranty status.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        ระบุ <strong>ค่าใช้จ่าย (Repair Cost)</strong> และ checkbox <strong>"Warranty Covers"</strong><br>
+        — หากอุปกรณ์ยังอยู่ในประกัน → checkbox จะถูกเลือกไว้ให้อัตโนมัติ<br>
+        — หากประกันหมดแล้ว → checkbox จะถูก Disabled<br>
+        <em>Enter <strong>Repair Cost</strong> and set the <strong>"Warranty Covers"</strong> checkbox.<br>
+        If the asset is under warranty → auto-checked (editable). If expired → disabled.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        เลือก <strong>Service Type, Priority</strong> และกำหนด <strong>วันเวลา (Scheduled Start/End)</strong><br>
+        <em>Select <strong>Service Type, Priority</strong>, and set <strong>Scheduled Start/End</strong> times.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-content">
+        คลิก <strong>"Save &amp; Assign Technicians →"</strong> ระบบจะสร้าง Work Order และเปิดหน้ามอบหมายช่าง<br>
+        <em>Click <strong>"Save &amp; Assign Technicians →"</strong>. The system saves the work order and opens the assignment panel.</em>
+      </div>
+    </div>
+  </div>
+
+  <!--<div class="screenshot-box">
+    <div class="icon">📋</div>
+    <div class="label">Screenshot: หน้าสร้าง Work Order / Create Work Order Form</div>
+    <div class="desc">/work-orders → "+ New Work Order"</div>
+  </div>
+
+  <div class="screenshot-box">
+    <div class="icon">🛡️</div>
+    <div class="label">Screenshot: ส่วนค่าใช้จ่ายและ Warranty / Repair Cost & Warranty Section</div>
+    <div class="desc">Repair Cost + Warranty Covers checkbox</div>
+  </div>-->
+  <img src="screenshot/workorder1.png" alt="Work Order"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+  <img src="screenshot/workorder2.png" alt="Work Order"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 6 — ASSIGN TECHNICIAN
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <div class="section-title">
+      <h3>การมอบหมายช่าง</h3>
+      <p>Assigning Technicians</p>
+    </div>
+  </div>
+
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">
+      หลังจากสร้าง Work Order แล้ว ระบบจะแสดงส่วน <strong>Assignment</strong> โดยอัตโนมัติ
+      สามารถมอบหมายช่างได้หลายคน และกำหนดให้คนหนึ่งเป็น <strong>หัวหน้างาน (Lead)</strong> ได้
+    </div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">
+      After creating a Work Order, the assignment panel appears automatically.
+      Multiple technicians can be assigned, with one designated as the <strong>Lead</strong>.
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        หลังบันทึก Work Order จะเห็นส่วน <strong>"Technicians (ผู้รับผิดชอบ)"</strong> ด้านล่าง<br>
+        <em>After saving, the <strong>"Technicians"</strong> assignment section appears below.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        เลือกช่างจาก Dropdown แล้วเลือก checkbox <strong>"Lead"</strong> หากต้องการให้เป็นหัวหน้า<br>
+        <em>Select a technician from the dropdown. Check <strong>"Lead"</strong> to designate as team lead.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        คลิก <strong>"+ Assign"</strong> เพื่อยืนยันการมอบหมาย สถานะ Work Order จะเปลี่ยนเป็น <span class="badge badge-assigned">Assigned</span> อัตโนมัติ<br>
+        <em>Click <strong>"+ Assign"</strong>. The Work Order status changes to <span class="badge badge-assigned">Assigned</span> automatically.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        สามารถเพิ่มช่างได้หลายคนด้วยวิธีเดียวกัน หรือลบออกโดยคลิก <strong>"✕ Remove"</strong><br>
+        <em>Add multiple technicians the same way, or remove one by clicking <strong>"✕ Remove"</strong>.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        คลิก <strong>"Done"</strong> เพื่อปิดหน้าต่าง<br>
+        <em>Click <strong>"Done"</strong> to close the panel.</em>
+      </div>
+    </div>
+  </div>
+
+  <!--<div class="screenshot-box">
+    <div class="icon">👥</div>
+    <div class="label">Screenshot: ส่วนมอบหมายช่าง / Technician Assignment Panel</div>
+    <div class="desc">Work Order → Assignment section</div>
+  </div>-->
+  <img src="screenshot/assign_technician.png" alt="assign_technician"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+
+ <div class="info-box">
+    ℹ️ <strong>Lead Technician:</strong> ช่างที่ถูกกำหนดเป็น Lead จะแสดงป้าย <strong>"Lead"</strong> สีทอง
+    และระบบจะตั้ง Lead ใหม่อัตโนมัติหากมีการเปลี่ยนแปลง<br>
+    <em>The Lead technician is shown with a gold <strong>"Lead"</strong> badge. The system auto-updates when changed.</em>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 7 — TECHNICIAN UPDATE
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <div class="section-title">
+      <h3>การอัปเดตสถานะงาน (ช่าง)</h3>
+      <p>Technician — Update Work Status</p>
+    </div>
+  </div>
+
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">
+      ช่างสามารถดูงานที่ได้รับมอบหมายและอัปเดตสถานะงานได้จากเมนู <strong>My Assignment</strong>
+      โดยระบบจะแสดงเฉพาะงานที่ถูก Assign ให้กับบัญชีนี้เท่านั้น
+    </div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">
+      Technicians can view their assigned work orders and update status from the <strong>My Assignment</strong> menu.
+      Only work orders assigned to the logged-in technician are shown.
+    </div>
+  </div>
+
+  <div class="warn-box">
+    ⚠️ <strong>ข้อกำหนด / Requirement:</strong> บัญชีผู้ใช้ต้องถูกผูกกับข้อมูลช่างก่อน (ดู Section 4.3)<br>
+    <em>The user account must be linked to a Technician profile first (see Section 4.3).</em>
+  </div>
+
+  <h4 style="margin:24px 0 12px; font-size:15px; color:#0f172a;">
+    ขั้นตอนการอัปเดตสถานะ / Status Update Steps
+  </h4>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        Login ด้วยบัญชีช่าง แล้วไปที่เมนู <strong>My Assignment</strong><br>
+        <em>Log in with the technician account and go to <strong>My Assignment</strong>.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        เลือกงานที่ต้องการอัปเดต จะเห็น Card แสดงข้อมูลงาน พร้อม <strong>เวลาเริ่มจริง</strong> และ <strong>เวลาสิ้นสุดจริง</strong><br>
+        <em>Find the work order to update. Each card shows the job details along with <strong>Actual Start</strong> and <strong>Actual End</strong> time fields.</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        ตรวจสอบหรือแก้ไข <strong>เวลาเริ่มต้น/สิ้นสุดจริง</strong> (ระบบ default ค่าจากเวลาที่นัดหมายไว้)<br>
+        <em>Review or edit the <strong>Actual Start/End</strong> times (pre-filled from scheduled times).</em>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        คลิกปุ่มตามสถานะที่ต้องการ:<br>
+        <em>Click the appropriate status button:</em>
+        <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:8px;">
+          <span style="background:#2563eb;color:#fff;padding:4px 14px;border-radius:6px;font-size:12px;">▶ เริ่มงาน</span>
+          <span style="background:#d97706;color:#fff;padding:4px 14px;border-radius:6px;font-size:12px;">⏸ พักงาน</span>
+          <span style="background:#059669;color:#fff;padding:4px 14px;border-radius:6px;font-size:12px;">✅ เสร็จแล้ว</span>
+          <span style="background:#3b82f6;color:#fff;padding:4px 14px;border-radius:6px;font-size:12px;">▶ กลับมาทำงาน</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <img src="screenshot/update_progress1.png" alt="update_progress1"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+  <img src="screenshot/update_progress2.png" alt="update_progress2"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+  <img src="screenshot/update_progress3.png" alt="update_progress3"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+
+  <!--<div class="screenshot-box">
+    <div class="icon">📱</div>
+    <div class="label">Screenshot: หน้า My Assignment — รายการงาน / Work Order List</div>
+    <div class="desc">/technician/work-orders</div>
+  </div>
+
+  <div class="screenshot-box">
+    <div class="icon">⏱️</div>
+    <div class="label">Screenshot: ส่วนอัปเดตสถานะพร้อม Actual Time / Status Update with Actual Times</div>
+    <div class="desc">Action buttons + Actual Start/End inputs</div>
+  </div>
+
+  <div class="tip-box">
+    💡 <strong>หมายเหตุ / Note:</strong> ระบบจะไม่อนุญาตให้บันทึกหากเวลาเริ่มต้นมากกว่าเวลาสิ้นสุด<br>
+    <em>The system will not allow saving if the Actual Start time is later than the Actual End time.</em>
+  </div>-->
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 8 — STATUS REFERENCE
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">8</div>
+    <div class="section-title">
+      <h3>สถานะ Work Order ทั้งหมด</h3>
+      <p>Work Order Status Reference</p>
+    </div>
+  </div>
+
+  <table>
+    <tr>
+      <th>สถานะ / Status</th>
+      <th>ความหมาย (ไทย)</th>
+      <th>Meaning (English)</th>
+      <th>ผู้อัปเดต / Updated By</th>
+    </tr>
+    <tr>
+      <td><span class="badge badge-draft">Draft</span></td>
+      <td>สร้างแล้ว รอมอบหมาย</td>
+      <td>Created, awaiting assignment</td>
+      <td>Admin</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-assigned">Assigned</span></td>
+      <td>มอบหมายช่างแล้ว รอเริ่มงาน</td>
+      <td>Technician assigned, pending start</td>
+      <td>Admin (auto)</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-progress">In Progress</span></td>
+      <td>กำลังดำเนินการ</td>
+      <td>Work is underway</td>
+      <td>Technician</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-hold">On Hold</span></td>
+      <td>หยุดพักชั่วคราว</td>
+      <td>Temporarily paused</td>
+      <td>Technician</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-complete">Completed</span></td>
+      <td>งานเสร็จสิ้น</td>
+      <td>Work finished</td>
+      <td>Technician</td>
+    </tr>
+    <tr>
+      <td><span class="badge" style="background:#f0fdf4;color:#166534;">Closed</span></td>
+      <td>ปิดงาน (Admin ยืนยัน)</td>
+      <td>Closed and confirmed by Admin</td>
+      <td>Admin</td>
+    </tr>
+    <tr>
+      <td><span class="badge" style="background:#fef2f2;color:#991b1b;">Cancelled</span></td>
+      <td>ยกเลิก</td>
+      <td>Cancelled</td>
+      <td>Admin</td>
+    </tr>
+  </table>
+
+  <div style="margin-top:32px;">
+    <h4 style="font-size:14px; color:#0f172a; margin-bottom:12px;">
+      흐름 Flow Diagram
+    </h4>
+    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:24px; text-align:center; font-size:13px; color:#475569;">
+      <span class="badge badge-draft">Draft</span>
+      <span style="margin:0 8px; color:#94a3b8;">──▶</span>
+      <span class="badge badge-assigned">Assigned</span>
+      <span style="margin:0 8px; color:#94a3b8;">──▶</span>
+      <span class="badge badge-progress">In Progress</span>
+      <span style="margin:0 8px; color:#94a3b8;">──▶</span>
+      <span class="badge badge-complete">Completed</span>
+      <span style="margin:0 8px; color:#94a3b8;">──▶</span>
+      <span class="badge" style="background:#f0fdf4;color:#166534;">Closed</span>
+      <br><br>
+      <div style="color:#94a3b8; font-size:12px;">
+        In Progress
+        <span style="margin:0 6px;">⇄</span>
+        <span class="badge badge-hold">On Hold</span>
+        &nbsp;(สามารถสลับกันได้ / can switch back and forth)
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="margin-top:60px; padding-top:24px; border-top:1px solid #e2e8f0; text-align:center; color:#94a3b8; font-size:11px; letter-spacing:0.1em;">
+    FIELD SERVICE MANAGEMENT SYSTEM — USER MANUAL v1.0 &nbsp;|&nbsp; 2025<br>
+    field-service-management-ui.vercel.app
+  </div>
+</div>
+
+</body>
+</html>

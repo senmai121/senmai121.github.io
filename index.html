@@ -733,6 +733,8 @@
     const allLangs = project.langs.join(',');
     const liveLink = project.homepage
       ? `<a class="project-link" href="${project.homepage}" target="_blank" rel="noopener" title="Live">↗</a>` : '';
+    const manualLink = meta.userManual
+      ? `<a class="project-link" href="${meta.userManual}" target="_blank" rel="noopener" title="User Manual">📖</a>` : '';
     const langDots = project.langs.map(l=>
       `<span class="repo-stat"><span class="lang-dot" style="background:${langColor(l)}"></span>${l}</span>`
     ).join('');
@@ -772,6 +774,7 @@
           <div class="project-links">
             ${!project.isGroup ? `<a class="project-link" href="${project.repos[0].html_url}" target="_blank" rel="noopener" title="GitHub">${GH_ICON}</a>` : ''}
             ${liveLink}
+            ${manualLink}
           </div>
         </div>
         <div class="project-title">
