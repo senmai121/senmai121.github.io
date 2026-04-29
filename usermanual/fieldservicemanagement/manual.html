@@ -340,6 +340,11 @@
     <span class="toc-title">สถานะ Work Order ทั้งหมด <span class="sub">Work Order Status Reference</span></span>
     <span class="toc-page-num">17</span>
   </div>
+  <div class="toc-item">
+    <span class="toc-num">9</span>
+    <span class="toc-title">Dashboard Analytics <span class="sub">Analytics &amp; Charts</span></span>
+    <span class="toc-page-num">19</span>
+  </div>
 </div>
 
 <!-- ════════════════════════════════════════════
@@ -779,6 +784,16 @@
     </div>
   </div>
 
+  <div class="info-box">
+    ℹ️ <strong>Asset ที่แสดงในรายการ / Available Assets Only:</strong><br>
+    Dropdown เลือก Asset จะแสดงเฉพาะ Asset ที่ <strong>ไม่ได้ผูกอยู่กับ Work Order ที่ยังค้างอยู่</strong>
+    (สถานะ Open หรือ In Progress) เท่านั้น Asset ที่กำลังถูกใช้งานในงานที่ยังไม่เสร็จจะไม่ปรากฏในรายการ
+    เพื่อป้องกันการมอบหมายงานซ้ำซ้อนบนอุปกรณ์เดิม<br>
+    <em>The Asset dropdown shows only assets that are <strong>not linked to any pending Work Order</strong>
+    (status: Open or In Progress). Assets already in use will not appear in the list,
+    preventing duplicate job assignments on the same equipment.</em>
+  </div>
+
   <!--<div class="screenshot-box">
     <div class="icon">📋</div>
     <div class="label">Screenshot: หน้าสร้าง Work Order / Create Work Order Form</div>
@@ -1059,6 +1074,184 @@
       </div>
     </div>
   </div>
+
+  <!-- Footer -->
+  <div style="margin-top:60px; padding-top:24px; border-top:1px solid #e2e8f0; text-align:center; color:#94a3b8; font-size:11px; letter-spacing:0.1em;">
+    FIELD SERVICE MANAGEMENT SYSTEM — USER MANUAL v1.0 &nbsp;|&nbsp; 2025<br>
+    field-service-management-ui.vercel.app
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 9 — DASHBOARD ANALYTICS
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">9</div>
+    <div class="section-title">
+      <h3>Dashboard Analytics</h3>
+      <p>Analytics &amp; Charts — ภาพรวมสถิติงาน</p>
+    </div>
+  </div>
+
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">
+      หน้า Dashboard มีส่วน <strong>"Analytics"</strong> ที่แสดงกราฟสรุปสถิติงาน 3 กราฟ
+      ช่วยให้ผู้ดูแลระบบสามารถติดตามภาพรวมการดำเนินงาน ประสิทธิภาพการส่งมอบงาน
+      และชั่วโมงทำงานของช่างได้ในหน้าเดียว
+    </div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">
+      The Dashboard includes an <strong>"Analytics"</strong> section displaying three summary charts,
+      giving administrators a single-page view of overall work order distribution,
+      on-time delivery performance, and individual technician workload.
+    </div>
+  </div>
+
+  <!-- 9.1 Work Order Status -->
+  <h4 style="margin:28px 0 12px; font-size:16px; color:#0f172a; border-left:3px solid #fbbf24; padding-left:12px;">
+    9.1 Work Order Status (Donut Chart)
+  </h4>
+
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">
+      กราฟวงกลม (Donut Chart) แสดง <strong>สัดส่วนของ Work Order แต่ละสถานะ</strong>
+      ในระบบ ณ ขณะนั้น ประกอบด้วยสี่สถานะหลัก ได้แก่
+      <strong>Open, In Progress, Completed</strong> และ <strong>Cancelled</strong>
+      ช่วยให้เห็นว่างานส่วนใหญ่อยู่ในสถานะใด และมีงานค้างคลั่งเท่าใด
+    </div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">
+      The Donut Chart displays the <strong>proportion of Work Orders by status</strong>
+      currently in the system, covering four main statuses:
+      <strong>Open, In Progress, Completed</strong>, and <strong>Cancelled</strong>.
+      This gives an at-a-glance view of workload distribution and backlog size.
+    </div>
+  </div>
+
+  <!--<div class="screenshot-box">
+    <div class="icon">🍩</div>
+    <div class="label">Screenshot: Work Order Status — Donut Chart</div>
+    <div class="desc">Dashboard → Analytics → Work Order Status</div>
+  </div>-->
+  <img src="screenshot/wo_donut.png" alt="wo_status"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+
+  <!-- 9.2 On-Time vs Late -->
+  <h4 style="margin:28px 0 12px; font-size:16px; color:#0f172a; border-left:3px solid #fbbf24; padding-left:12px;">
+    9.2 On-Time vs Late (Bar Chart)
+  </h4>
+
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">
+      กราฟแท่ง (Bar Chart) แบบรายเดือน ย้อนหลัง <strong>6 เดือน</strong>
+      แสดงจำนวนงานที่ <strong>เสร็จตรงเวลา (On-Time)</strong> เปรียบเทียบกับงานที่
+      <strong>เสร็จล่าช้า (Late)</strong> โดยใช้ <strong>Scheduled End</strong>
+      เป็น Deadline ในการตัดสิน หากงานเสร็จก่อนหรือตรงกับเวลานัดหมายถือว่า On-Time
+    </div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">
+      A monthly Bar Chart covering the <strong>last 6 months</strong>, comparing the number of
+      <strong>On-Time</strong> completions against <strong>Late</strong> completions.
+      The <strong>Scheduled End</strong> date/time is used as the deadline —
+      a work order is considered On-Time if it is completed on or before the scheduled end.
+    </div>
+  </div>
+
+  <div class="tip-box">
+    💡 <strong>เงื่อนไขการนับ / Counting Rule:</strong>
+    งานจะถูกนำมาคำนวณในกราฟนี้เฉพาะงานที่มีสถานะ <strong>Completed</strong> เท่านั้น
+    งานที่ยังค้างอยู่หรือถูกยกเลิกจะไม่ถูกนับ<br>
+    <em>Only Work Orders with status <strong>Completed</strong> are counted in this chart.
+    Pending or cancelled work orders are excluded.</em>
+  </div>
+
+  <!--<div class="screenshot-box">
+    <div class="icon">📊</div>
+    <div class="label">Screenshot: On-Time vs Late — Monthly Bar Chart (6 months)</div>
+    <div class="desc">Dashboard → Analytics → On-Time vs Late</div>
+  </div>-->
+  <img src="screenshot/ontime_late.png" alt="ontime_late"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+
+  <!-- 9.3 Technician Hours -->
+  <h4 style="margin:28px 0 12px; font-size:16px; color:#0f172a; border-left:3px solid #fbbf24; padding-left:12px;">
+    9.3 Technician Hours (Horizontal Bar Chart)
+  </h4>
+
+  <div class="lang-block">
+    <span class="lang-badge lang-th">ภาษาไทย</span>
+    <div class="content-text">
+      กราฟแท่งแนวนอน (Horizontal Bar Chart) แสดง <strong>ชั่วโมงทำงานสะสมของช่างแต่ละคน</strong>
+      ในเดือนปัจจุบัน โดยนับเฉพาะงานที่มีสถานะ <strong>Completed</strong> เท่านั้น
+      ช่วยให้เห็นปริมาณงานของช่างแต่ละคน และสามารถวางแผนการมอบหมายงานให้สมดุลได้
+    </div>
+  </div>
+  <div class="lang-block">
+    <span class="lang-badge lang-en">English</span>
+    <div class="content-text">
+      A Horizontal Bar Chart showing the <strong>accumulated working hours per technician</strong>
+      for the current month. Only work orders with status <strong>Completed</strong> are included
+      in the calculation. This helps identify workload imbalances and plan technician assignments accordingly.
+    </div>
+  </div>
+
+  <div class="info-box">
+    ℹ️ <strong>วิธีคำนวณชั่วโมง / Hour Calculation:</strong>
+    ระบบคำนวณจาก <strong>Actual Start</strong> ถึง <strong>Actual End</strong> ของงานแต่ละใบที่ Completed
+    ในเดือนปัจจุบัน หากช่างรับผิดชอบหลายงาน ชั่วโมงจะถูกรวมเข้าด้วยกัน<br>
+    <em>Hours are calculated from <strong>Actual Start</strong> to <strong>Actual End</strong>
+    for each Completed work order in the current month.
+    If a technician has multiple completed jobs, their hours are summed.</em>
+  </div>
+
+  <!--<div class="screenshot-box">
+    <div class="icon">👷</div>
+    <div class="label">Screenshot: Technician Hours — Horizontal Bar Chart (Current Month)</div>
+    <div class="desc">Dashboard → Analytics → Technician Hours</div>
+  </div>-->
+  <img src="screenshot/technician_hours.png" alt="technician_hours"
+     style="max-width:100%; border-radius:8px; margin:20px 0; border:1px solid #e2e8f0;">
+
+  <!-- Summary Table -->
+  <h4 style="margin:28px 0 12px; font-size:15px; color:#0f172a;">
+    สรุปกราฟ Analytics / Analytics Charts Summary
+  </h4>
+  <table>
+    <tr>
+      <th>กราฟ / Chart</th>
+      <th>ประเภท / Type</th>
+      <th>ข้อมูลที่แสดง / Data Shown</th>
+      <th>ช่วงเวลา / Period</th>
+    </tr>
+    <tr>
+      <td><strong>Work Order Status</strong></td>
+      <td>Donut Chart</td>
+      <td>สัดส่วนงานแต่ละสถานะ<br><em>Work orders by status</em></td>
+      <td>ปัจจุบัน / Current</td>
+    </tr>
+    <tr>
+      <td><strong>On-Time vs Late</strong></td>
+      <td>Bar Chart</td>
+      <td>งานตรงเวลา vs ล่าช้า (Completed เท่านั้น)<br><em>On-time vs late completions only</em></td>
+      <td>6 เดือนย้อนหลัง<br><em>Last 6 months</em></td>
+    </tr>
+    <tr>
+      <td><strong>Technician Hours</strong></td>
+      <td>Horizontal Bar</td>
+      <td>ชั่วโมงสะสมต่อช่าง (Completed เท่านั้น)<br><em>Accumulated hours per technician</em></td>
+      <td>เดือนปัจจุบัน<br><em>Current month</em></td>
+    </tr>
+  </table>
 
   <!-- Footer -->
   <div style="margin-top:60px; padding-top:24px; border-top:1px solid #e2e8f0; text-align:center; color:#94a3b8; font-size:11px; letter-spacing:0.1em;">
